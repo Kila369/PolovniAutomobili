@@ -1,11 +1,18 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 
 const userRouter = require("./routes/userRoutes");
 const vehicleRouter = require("./routes/vehicleRoutes");
 const AppError = require("./utils/appError");
 
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:5000",
+  })
+);
 
 app.use(morgan("dev"));
 
