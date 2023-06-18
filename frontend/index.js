@@ -33,5 +33,3 @@ fetch('forgotpassword.html')
     fp.innerHTML = html;
   });
 
-
-  

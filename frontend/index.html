@@ -77,311 +77,16 @@
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
 <![endif]-->
+<script src="index.js" type="text/javascript"></script>
+
+
 <script type="text/javascript">
-  function register() {
-    const signupForm = document.getElementById('signupForm');
-     signupForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
   
-    const fullName = document.getElementById('name').value;
-    const email = document.getElementById('email1').value;
-    const password = document.getElementById('password1').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-    console.log(fullName,email,password,confirmPassword);
-    
-
-    const formData = {
-      name: fullName,
-      email : email,
-      password :password,
-      passwordConfirm: confirmPassword
-    };
-
-    try {
-      const token = 'token';
-      const response = await fetch('http://localhost:3000/api/v1/users/singup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await response.json();
-      console.log(data);
-      if (response.ok) {
-        // Registration successful
-        const token = data.token;
-        localStorage.setItem('token', token);
-        window.location.href = '/SI2/PolovniAutomobili/frontend/index.html';
-      } else {
-        // Registration failed
-        alert(data.message);
-      }
-    } catch (error) {
-      console.error('Error:', error.message);
-      alert('An error occurred. Please try again later.');
-    }
-  });  
-  }
-
-  function login() {
-    const loginForm = document.getElementById('loginForm');
-
-  loginForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-
-  const formData = {
-    email,
-    password
-  };
-
-  try {
-    const token = 'your_bearer_token';
-    const response = await fetch('http://localhost:3000/api/v1/users/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify(formData)
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      // Login successful
-
-      const { token } = data;
-      localStorage.setItem('email', email)
-      localStorage.setItem('token', token);
-      window.location.href = '/SI2/PolovniAutomobili/frontend/index.html';
-    } else {
-      // Login failed
-      const { message } = data;
-      alert(`Login failed: ${message}`);
-    }
-  } catch (error) {
-    console.error('Error:', error.message);
-    alert('An error occurred. Please try again later.');
-  }
-});
-
-  }
-
-  function getAllVehicles() {
-  const vehicleList = document.getElementById('vehicleList');
-  const vehicleMake = document.getElementById('make');
-  const vehicleType = document.getElementById('type');
-  const vehicleName = document.getElementById('name');
-  const vehiclePrice = document.getElementById('price');
-  const vehicleYear = document.getElementById('year');
-  const vehicleMileage = document.getElementById('mileage');
-  const vehicleBodyType = document.getElementById('bodytype');
-  const vehicleCondition = document.getElementById('condition');
-  const vehicleColor = document.getElementById('color');
-  const vehicleWheelDrive = document.getElementById('wheeldrive');
-  const vehiclePower = document.getElementById('power');
-  const vehicleFuel = document.getElementById('fuel');
-  const vehicleModel = document.getElementById('model');
-
-
-  const arrVehicleBodyType = new Set();
-  const arrVehicleColor =  new Set();
-  const arrVehicleCondition =  new Set();
-  const arrVehiclefuel =  new Set();
-  const arrVehiclemake =  new Set();
-  const arrVehiclemileage =  new Set();
-  const arrVehiclemodel =  new Set();
-  const arrVehiclename =  new Set();
-  const arrVehiclepower =  new Set();
-  const arrVehicleprice =  new Set();
-  const arrVehiclestatus =  new Set();
-  const arrVehicleuser =  new Set();
-  const arrVehicleType =  new Set();
-  const arrVehiclewheeldrive =  new Set();
-  const arrVehicleyear =  new Set();
-  const arrVehicleid =  new Set();
-
-  fetch('http://localhost:3000/api/v1/vehicles', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === 'success' && Array.isArray(data.data.vehicles)) {
-        data.data.vehicles.forEach(vehicle => {
-          arrVehicleBodyType.add(vehicle["bodyType"]);
-          arrVehicleColor.add(vehicle["color"]);
-          arrVehicleCondition.add(vehicle["condition"]);
-          arrVehiclefuel.add(vehicle["fuel"]);
-          arrVehiclemake.add(vehicle["make"]);
-          arrVehiclemileage.add(vehicle["mileage"]);
-          arrVehiclemodel.add(vehicle["model"]);
-          arrVehiclename.add(vehicle["name"]);
-          arrVehiclepower.add(vehicle["power"]);
-          arrVehicleprice.add(vehicle["price"]);
-          arrVehiclestatus.add(vehicle["status"]);
-          arrVehicleuser.add(vehicle["user"]);
-          arrVehicleType.add(vehicle["vehicleType"]);
-          arrVehiclewheeldrive.add(vehicle["wheelDrive"]);
-          arrVehicleyear.add(vehicle["year"]);
-          arrVehicleid.add(vehicle["id"]);
-        });
-
-
-
-      } else {
-        console.error('Error: Failed to retrieve vehicle data.');
-      }
-      arrVehiclemake.forEach(make => {
-          var opt = document.createElement('option');
-          opt.value = make;
-          opt.innerHTML = make;
-          vehicleMake.appendChild(opt);
-          
-        });
-        arrVehicleBodyType.forEach(bodyType => {
-        var opt = document.createElement('option');
-          opt.value = bodyType;
-          opt.innerHTML = bodyType;
-          // Replace 'vehicleBodyType' with the appropriate select element ID
-          vehicleBodyType.appendChild(opt);
-         
-        });
-
-        arrVehicleColor.forEach(color => {
-          var opt = document.createElement('option');
-          opt.value = color;
-          opt.innerHTML = color;
-          // Replace 'vehicleColor' with the appropriate select element ID
-          vehicleColor.appendChild(opt);
-          
-        });
-
-        arrVehicleCondition.forEach(condition => {
-          var opt = document.createElement('option');
-          opt.value = condition;
-          opt.innerHTML = condition;
-          // Replace 'vehicleCondition' with the appropriate select element ID
-          vehicleCondition.appendChild(opt);
-         
-        });
-
-        arrVehiclefuel.forEach(fuel => {
-          var opt = document.createElement('option');
-          opt.value = fuel;
-          opt.innerHTML = fuel;
-          // Replace 'vehicleFuel' with the appropriate select element ID
-          vehicleFuel.appendChild(opt);
-          
-        });
-
-        arrVehiclemileage.forEach(mileage => {
-          var opt = document.createElement('option');
-          opt.value = mileage;
-          opt.innerHTML = mileage;
-          // Replace 'vehicleMileage' with the appropriate select element ID
-          vehicleMileage.appendChild(opt);
-         
-        });
-
-        arrVehiclemodel.forEach(model => {
-          var opt = document.createElement('option');
-          opt.value = model;
-          opt.innerHTML = model;
-          // Replace 'vehicleModel' with the appropriate select element ID
-          vehicleModel.appendChild(opt);
-         
-        });
-
-        arrVehiclename.forEach(name => {
-          var opt = document.createElement('option');
-          opt.value = name;
-          opt.innerHTML = name;
-          // Replace 'vehicleName' with the appropriate select element ID
-          vehicleName.appendChild(opt);
-          
-        });
-
-        arrVehiclepower.forEach(power => {
-          var opt = document.createElement('option');
-          opt.value = power;
-          opt.innerHTML = power;
-          // Replace 'vehiclePower' with the appropriate select element ID
-          vehiclePower.appendChild(opt);
-          
-        });
-
-        arrVehicleprice.forEach(price => {
-          var opt = document.createElement('option');
-          opt.value = price;
-          opt.innerHTML = price;
-          // Replace 'vehiclePrice' with the appropriate select element ID
-          vehiclePrice.appendChild(opt);
-         
-        });
-
-        arrVehicleType.forEach(type => {
-          var opt = document.createElement('option');
-          opt.value = type;
-          opt.innerHTML = type;
-          // Replace 'vehicleType' with the appropriate select element ID
-          vehicleType.appendChild(opt);
-          
-        });
-
-        arrVehiclewheeldrive.forEach(wheelDrive => {
-          var opt = document.createElement('option');
-          opt.value = wheelDrive;
-          opt.innerHTML = wheelDrive;
-          // Replace 'vehicleWheelDrive' with the appropriate select element ID
-          vehicleWheelDrive.appendChild(opt);
-          console.log(wheelDrive);
-        });
-
-        arrVehicleyear.forEach(year => {
-          var opt = document.createElement('option');
-          opt.value = year;
-          opt.innerHTML = year;
-          // Replace 'vehicleYear' with the appropriate select element ID
-          vehicleYear.appendChild(opt);
-         
-        });
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-}
-
-  
-
   window.onload = function() {
-    
-    register()
-    login()
     getAllVehicles()
+    hidden()
   }
 </script>
-
-
-<script>
-  function logout() {
-  
-  localStorage.removeItem('token');
-  window.location.href = '/SI2/PolovniAutomobili/frontend/index.html';
-  
-  }
-
-</script>
-
-
 </head>
 
 <body id="index1">
@@ -445,7 +150,7 @@
         </div>
         <div class="form-group col-md-3 col-sm-6 black_input">
           <div class="select">
-            <select id="type" name="type" class="form-control">
+            <select id="vehicleType" name="vehicleType" class="form-control">
               <option>Tip</option>
             </select>
           </div>
@@ -472,7 +177,7 @@
         </div>
         <div class="form-group col-md-3 col-sm-6 black_input">
           <div class="select">
-            <select id="wheeldrive" name="wheeldrive" class="form-control">
+            <select id="wheelDrive" name="wheelDrive" class="form-control">
             </select>
           </div>
         </div>
@@ -485,7 +190,7 @@
         </div>
         <div class="form-group col-md-3 col-sm-6 black_input">
           <div class="select">
-            <select id="bodytype" name="bodytype" class="form-control">
+            <select id="bodyType" name="bodyType" class="form-control">
             </select>
           </div>
         </div>
@@ -1198,7 +903,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="index.js" type="text/javascript"></script>
 
 
 
@@ -1211,7 +915,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
+<script src="header.js"></script> 
+<script src="createvehicle.js" type="text/javascript"></script>
 <!--Slider-JS--> 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

@@ -43,10 +43,14 @@ const login = catchAsync(async (req, res, next) => {
   }
 
   const token = signToken(user._id);
+  const name = user.name;
+
 
   res.status(200).json({
     status: "success",
     token,
+    email,
+    name
   });
 });
 
