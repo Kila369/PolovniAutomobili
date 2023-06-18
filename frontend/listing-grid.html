@@ -21,7 +21,7 @@
 <link href="assets/css/bootstrap-slider.min.css" rel="stylesheet">
 <!--FontAwesome Font Style -->
 <link href="assets/css/fontawesome.min.css" rel="stylesheet">
-
+<link href="assets/css/carGrid.css" rel="stylesheet">
 <!-- Fav and touch icons -->
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/images/favicon-icon/apple-touch-icon-144-precomposed.png">
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/favicon-icon/apple-touch-icon-114-precomposed.png">
@@ -37,6 +37,12 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->  
 </head>
+
+<script>
+  function handleClick() {
+  alert("Oglas je sacuvan!");
+}
+</script>
 <body>
 
 <div id = "header"></div>
@@ -145,11 +151,13 @@
         <div class="row">
           <div class="col-md-4 grid_listing">
             <div class="product-listing-m gray-bg">
-              <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-1.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Novo</div>
+              <div class="product-listing-img"> <a href="carGrid.html"><img src="assets/images/featured-img-1.jpg" class="img-fluid" alt="image" /> </a>
+                <div class="label_icon1">
+                  <button type="submit" onclick="handleClick()"  class="btnic"><i class="fa fa-folder" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="product-listing-content">
-                <h5><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h5>
+                <h5><a href="carGrid.html">Mazda CX-5 SX, V6, ABS, Sunroof </a></h5>
                 <p class="list-price">$89,000</p>
                 <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
                 <ul class="features_list">
@@ -164,7 +172,9 @@
           <div class="col-md-4 grid_listing">
             <div class="product-listing-m gray-bg">
               <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-2.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Polovno</div>
+                <div class="label_icon1">
+                  <button type="submit" class="btnic"><i class="fa fa-folder" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="product-listing-content">
                 <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
@@ -182,7 +192,9 @@
           <div class="col-md-4 grid_listing">
             <div class="product-listing-m gray-bg">
               <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-3.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Novo</div>
+                <div class="label_icon1">
+                  <button type="submit" class="btnic"><i class="fa fa-folder" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="product-listing-content">
                 <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
@@ -200,7 +212,9 @@
           <div class="col-md-4 grid_listing">
             <div class="product-listing-m gray-bg">
               <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-3.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Novo</div>
+                <div class="label_icon1">
+                  <button type="submit" class="btnic"><i class="fa fa-folder" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="product-listing-content">
                 <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
@@ -218,7 +232,9 @@
           <div class="col-md-4 grid_listing">
             <div class="product-listing-m gray-bg">
               <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-1.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Novo</div>
+                <div class="label_icon1">
+                  <button type="submit" class="btnic"><i class="fa fa-folder" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="product-listing-content">
                 <h5><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h5>
@@ -236,7 +252,9 @@
           <div class="col-md-4 grid_listing">
             <div class="product-listing-m gray-bg">
               <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-2.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Polovno</div>
+                <div class="label_icon1">
+                  <button type="submit" class="btnic"><i class="fa fa-folder" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="product-listing-content">
                 <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
@@ -254,7 +272,9 @@
           <div class="col-md-4 grid_listing">
             <div class="product-listing-m gray-bg">
               <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-1.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Polovno</div>
+                 <div class="label_icon1">
+                  <button type="submit" class="btnic"><i class="fa fa-folder" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="product-listing-content">
                 <h5><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h5>
@@ -272,7 +292,9 @@
           <div class="col-md-4 grid_listing">
             <div class="product-listing-m gray-bg">
               <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-2.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Novo</div>
+                <div class="label_icon1">
+                  <button type="submit" class="btnic"><i class="fa fa-folder" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="product-listing-content">
                 <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
@@ -290,7 +312,9 @@
           <div class="col-md-4 grid_listing">
             <div class="product-listing-m gray-bg">
               <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-3.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Polovno</div>
+                <div class="label_icon1">
+                  <button type="submit" class="btnic"><i class="fa fa-folder" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="product-listing-content">
                 <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
@@ -308,7 +332,9 @@
           <div class="col-md-4 grid_listing">
             <div class="product-listing-m gray-bg">
               <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-3.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Polovno</div>
+                <div class="label_icon1">
+                  <button type="submit" class="btnic"><i class="fa fa-folder" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="product-listing-content">
                 <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
@@ -326,7 +352,9 @@
           <div class="col-md-4 grid_listing">
             <div class="product-listing-m gray-bg">
               <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-1.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Novo</div>
+                <div class="label_icon1">
+                  <button type="submit" class="btnic"><i class="fa fa-folder" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="product-listing-content">
                 <h5><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h5>
@@ -344,7 +372,9 @@
           <div class="col-md-4 grid_listing">
             <div class="product-listing-m gray-bg">
               <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-2.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Polovno</div>
+                <div class="label_icon1">
+                  <button type="submit" class="btnic"><i class="fa fa-folder" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="product-listing-content">
                 <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>

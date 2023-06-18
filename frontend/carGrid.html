@@ -22,6 +22,8 @@
 <!--FontAwesome Font Style -->
 <link href="assets/css/fontawesome.min.css" rel="stylesheet">
 
+<link href="assets/css/carGrid.css" rel="stylesheet">
+
 <!-- Fav and touch icons -->
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/images/favicon-icon/apple-touch-icon-144-precomposed.png">
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/favicon-icon/apple-touch-icon-114-precomposed.png">
@@ -38,82 +40,44 @@
 <![endif]-->  
 </head>
 <body>
+<div id = "header"></div>
 
-  <div id ="header"></div>
 
-<!--Page Header-->
-<section class="page-header profile_page">
-  <div class="container">
-    <div class="page-header_wrap">
-      <div class="page-heading">
-        <h1>Vas profil</h1>
+
+<div class="col grid_listing" style="display:flex; padding-top: 50px;">
+    <div class="product-listing-m gray-bg">
+      <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-1.jpg" class="img-fluid" alt="image"> </a>
       </div>
-      <ul class="coustom-breadcrumb">
-        <li><a href="index.html">Pocetna</a></li>
-        <li>Profil</li>
-      </ul>
-    </div>
-  </div>
-  <!-- Dark Overlay-->
-  <div class="dark-overlay"></div>
-</section>
-<!-- /Page Header--> 
-
-<!--Profile-setting-->
-<section class="user_profile inner_pages">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3 col-sm-3">
-        <div class="profile_nav">
-          <ul>
-            <li class="active"><a href="profile-settings.html">Podesavanje profila</a></li>
-            <li><a href="my-vehicles.html">Oglasi koje pratim</a></li>
-            <li><a href="post-vehicle.html">Postavi oglas </a></li>
-            <li><a href="admin.html">Admin tabla</a></li>
-            <li><a href="#">Odjavi se</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-6 col-sm-8">
-        <div class="profile_wrap">
-          <h5 class="uppercase underline">Podesavanja profila</h5>
-          <form action="#" method="get">
-            <div class="form-group">
-              <label class="control-label">Ime i prezime </label>
-              <input class="form-control white_bg" id="fullname" type="text">
-            </div>
-            <div class="form-group">
-              <label class="control-label">Email Adresa</label>
-              <input class="form-control white_bg" id="email" type="email">
-            </div>
-            <div class="gray-bg field-title">
-              <h6>Promeni sifru</h6>
-            </div>
-            <div class="form-group">
-              <label class="control-label">Nova Sifra</label>
-              <input class="form-control white_bg" id="password" type="password">
-            </div>
-            <div class="form-group">
-              <label class="control-label">Potrvrdi sifru</label>
-              <input class="form-control white_bg" id="c-password" type="password">
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn">Zapamti<span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
-            </div>
-          </form>
-        </div>
+      <div class="product-listing-content">
+        <h5><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h5>
+        <p class="list-price">$89,000</p>
+        <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
+        <ul class="features_list">
+          <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
+          <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
+          <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
+          <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
+        </ul>
       </div>
     </div>
   </div>
-</section>
-<!--/Profile-setting--> 
 
-<div id ="footer"></div>
-<div id="login"></div>
-<div id="register"></div>
-<div id="zaboravljenalozinka"></div>
 
-<!-- Scripts --> 
+
+<div id = "footer"></div>
+<div id = "login"></div>
+<div id = "register"></div>
+<div id = "zaboravljenalozinka"></div>
+    
+
+
+
+<!--Back to top-->
+ <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
+<!--/Back to top--> 
+    
+    
+    <!-- Scripts --> 
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script> 
 <script src="assets/js/interface.js"></script> 
@@ -124,6 +88,6 @@
 <!--Slider-JS--> 
 <script src="assets/js/slick.min.js"></script> 
 <script src="assets/js/owl.carousel.min.js"></script>
-
+    
 </body>
-</html>
+</html>    
