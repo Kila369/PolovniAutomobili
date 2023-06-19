@@ -40,9 +40,10 @@
 <script>
   
   window.onload = function() {
+    vehicleHandler()
     hidden()
     getAllVehicles()
-    vehicleHandler()
+    
     
     };
   
@@ -81,7 +82,7 @@
   var arrayVehicle = [];
   
   if (window.location.search.length === 0) {
-   
+    
 
   fetch('http://localhost:3000/api/v1/vehicles?status=approved', {
       method: 'GET',
@@ -94,12 +95,15 @@
     
         if (data.status === 'success' && Array.isArray(data.data.vehicles)) {
           data.data.vehicles.forEach(vehicle => {
-  
+            
             arrayVehicle.push(vehicle)
             
           });
-  
-  
+          for (let i = 0; i < arrayVehicle.length; i++) {
+            const element = arrayVehicle[i];
+            console.log(element);
+            generisanjeKoda(element['mileage'], element['bodyType'], element['year'], element['fuel'], element['name'], element['price'],element['_id']); 
+          }
   
         } else {
           console.error('Error: Failed to retrieve vehicle data.');
@@ -108,6 +112,7 @@
       
       }
       else {
+       
       let link = 'http://localhost:3000/api/v1/vehicles?status=approved&';  
       const queryString = window.location.search;
       const queryStringWithoutQuestionMark = queryString.slice(1);
@@ -128,6 +133,7 @@
             
         }
       )
+      
       fetch(link, {
       method: 'GET',
       headers: {
@@ -140,102 +146,106 @@
           data.data.vehicles.forEach(vehicle => {
 
             arrayVehicle.push(vehicle)
-          
+            
           });
+          
+          for (let i = 0; i < arrayVehicle.length; i++) {
+            const element = arrayVehicle[i];
+            console.log(element);
+            generisanjeKoda(element['mileage'], element['bodyType'], element['year'], element['fuel'], element['name'], element['price'],element['_id']);
+        }
   
   
   
         } else {
           console.error('Error: Failed to retrieve vehicle data.');
         }});
+        
       }
       
    // console.log(arrayVehicle);
    
-    for (let i = 0; i < arrayVehicle.length; i++) {
-      const element = arrayVehicle[i];
-      console.log(element);
-     /* generisanjeKoda(element['mileage'], element['bodyType'], element['year'], element['fuel'], element['name'], element['price']); */
-    }
+    
     }
     
 </script>
 <script>
-  function generisanjeKoda(carKilometers, carBodytype, carYear, carFuel,carName,carPrice){
-    
-    // Create a div element with class "col-md-4 grid_listing"
+  function generisanjeKoda(carKilometers, carBodytype, carYear, carFuel,carName,carPrice,carId){
+
+const linkOglasa = 'carGrid.html?id=' + carId;
+
+
+
 const divColMd4 = document.createElement('div');
 divColMd4.className = 'col-md-4 grid_listing';
 
-// Create a div element with class "product-listing-m gray-bg"
 const divProductListing = document.createElement('div');
 divProductListing.className = 'product-listing-m gray-bg';
 
-// Create a div element with class "product-listing-img"
+
 const divProductListingImg = document.createElement('div');
 divProductListingImg.className = 'product-listing-img';
 
-// Create an anchor element with href "carGrid.html"
-const anchor = document.createElement('a');
-anchor.href = 'carGrid.html';
 
-// Create an image element with src "assets/images/featured-img-1.jpg" and class "img-fluid"
+const anchor = document.createElement('a');
+anchor.href = linkOglasa;
+
+
 const image = document.createElement('img');
 image.src = 'assets/images/featured-img-1.jpg';
 image.className = 'img-fluid';
 
-// Append the image element to the anchor element
+
 anchor.appendChild(image);
 
-// Create a div element with class "label_icon1"
+
 const divLabelIcon1 = document.createElement('div');
 divLabelIcon1.className = 'label_icon1';
 
-// Create a button element with class "btnic" and onclick event handler "handleClick()"
+
 const button = document.createElement('button');
 button.className = 'btnic';
 button.onclick = handleClick;
 
-// Create an icon element with class "fa fa-folder" and aria-hidden attribute set to "true"
+
 const icon = document.createElement('i');
 icon.className = 'fa fa-folder';
 icon.setAttribute('aria-hidden', 'true');
 
-// Append the icon element to the button element
+
 button.appendChild(icon);
 
-// Append the button element to the divLabelIcon1 element
+
 divLabelIcon1.appendChild(button);
 
-// Append the anchor, divLabelIcon1, and divProductListingImg to the divProductListing
+
 divProductListingImg.appendChild(anchor);
 divProductListingImg.appendChild(divLabelIcon1);
 
-// Create a div element with class "product-listing-content"
+
 const divProductListingContent = document.createElement('div');
 divProductListingContent.className = 'product-listing-content';
 
-// Create an h5 element with an anchor element inside
+
 const h5 = document.createElement('h5');
 const anchorInsideH5 = document.createElement('a');
-anchorInsideH5.href = 'carGrid.html';
+anchorInsideH5.href = linkOglasa;
 anchorInsideH5.textContent = carName;
 
-// Append the anchorInsideH5 to the h5 element
+
 h5.appendChild(anchorInsideH5);
 
-// Create a p element with class "list-price" and text content "$89,000"
+
 const pListPrice = document.createElement('p');
 pListPrice.className = 'list-price';
 pListPrice.textContent = '$'+carPrice;
 
-// Create an unordered list element with class "features_list" and list items inside
+
 const ulFeaturesList = document.createElement('ul');
 ulFeaturesList.className = 'features_list';
 
 const features = [carKilometers, carBodytype, carYear, carFuel];
 
-// Loop through the features array and create a list item for each feature
 features.forEach(feature => {
   const li = document.createElement('li');
   const iconFeature = document.createElement('i');
@@ -259,19 +269,18 @@ features.forEach(feature => {
   ulFeaturesList.appendChild(li);
 });
 
-// Append the h5, pListPrice, divCarLocation, and ulFeaturesList to the divProductListingContent
 divProductListingContent.appendChild(h5);
 divProductListingContent.appendChild(pListPrice);
 divProductListingContent.appendChild(ulFeaturesList);
 
-// Append the divProductListingImg and divProductListingContent to the divProductListing
+
 divProductListing.appendChild(divProductListingImg);
 divProductListing.appendChild(divProductListingContent);
 
-// Append the divProductListing to the divColMd4
+
 divColMd4.appendChild(divProductListing);
 
-// Append the divColMd4 to the desired parent element on the page
+
 const parentElement = document.getElementById('pozivanjeHTML'); 
 parentElement.appendChild(divColMd4);
   }
@@ -292,7 +301,7 @@ parentElement.appendChild(divColMd4);
 
         </div>
         <div class="pagination">
-          <ul>
+          <ul id="pagination-list">
             <li class="current">1</li>
             <li><a href="#">2</a></li>
             <li><a href="#">3</a></li>

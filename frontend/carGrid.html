@@ -38,25 +38,95 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->  
+<script src="index.js"></script>
+<script>
+  
+  window.onload = function() {
+    fetchCar()
+    hidden()
+    
+    };
+ 
+</script>
 </head>
 <body>
 <div id = "header"></div>
 
+<script>
+  function fetchCar(){
+   
 
+
+   if (window.location.search.length === 0) {
+      window.location.href='listing-grid.html';
+      
+   }
+   else{
+    var link = 'http://localhost:3000/api/v1/vehicles?status=approved&_';
+      const queryString = window.location.search;
+      const queryStringWithoutQuestionMark = queryString.slice(1);
+      const keyValuePairs = queryStringWithoutQuestionMark.split('&');
+      const queryArray = keyValuePairs.map(keyValue => {
+        
+        const [key, value] = keyValue.split('=');
+        return { key, value };
+      });
+      const filteredArray = queryArray.filter(query => query.value !== '' || query.key !=='id');
+      filteredArray.forEach(query=> {
+        
+            link+= query.key + '=' + query.value;
+            if (filteredArray.indexOf(query) < filteredArray.length - 1) {
+                link += '&';
+                
+            }
+            
+        }
+      )
+   
+    fetch(link, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        
+        if (data.status === 'success' && Array.isArray(data.data.vehicles)) {
+          var productListingContent = document.querySelector('.product-listing-content');
+
+          
+          productListingContent.querySelector('h5 a').textContent = data.data.vehicles[0]['name'];
+          productListingContent.querySelector('.list-price').textContent = data.data.vehicles[0]['price'] + '$';
+          productListingContent.querySelectorAll('.features_list li')[0].textContent = data.data.vehicles[0]['mileage'] + 'KM';
+          productListingContent.querySelectorAll('.features_list li')[1].textContent = data.data.vehicles[0]['bodyType'];
+          productListingContent.querySelectorAll('.features_list li')[2].textContent = data.data.vehicles[0]['year'];
+          productListingContent.querySelectorAll('.features_list li')[3].textContent = data.data.vehicles[0]['fuel'];
+          console.log(data.data.vehicles[0]['color'])
+  
+        } else {
+          console.error('Error: Failed to retrieve vehicle data.');
+          
+        }});
+      
+      }
+    }
+
+   
+</script>
 
 <div class="col grid_listing" style="display:flex; padding-top: 50px;">
     <div class="product-listing-m gray-bg">
       <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-1.jpg" class="img-fluid" alt="image"> </a>
       </div>
       <div class="product-listing-content">
-        <h5><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h5>
-        <p class="list-price">$89,000</p>
-        <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
+        <h5><a href="#" >ime oglasa </a></h5>
+        <p class="list-price">cena oglasa</p>
         <ul class="features_list">
-          <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
-          <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
-          <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
-          <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
+          <li><i class="fa fa-road" aria-hidden="true"></i>Kilometraza</li>
+          <li><i class="fa fa-tachometer" aria-hidden="true"></i>Body type</li>
+          <li><i class="fa fa-calendar" aria-hidden="true"></i>Year</li>
+          <li><i class="fa fa-car" aria-hidden="true"></i>Fuel</li>
         </ul>
       </div>
     </div>
@@ -82,7 +152,8 @@
 <script src="assets/js/bootstrap.min.js"></script> 
 <script src="assets/js/interface.js"></script> 
 <script src="assets/js/31f5977fdc.js"></script>
-<script src="index.js"></script>
+
+<script src="header.js" ></script>
 <!--bootstrap-slider-JS--> 
 <script src="assets/js/bootstrap-slider.min.js"></script> 
 <!--Slider-JS--> 
