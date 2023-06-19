@@ -1,7 +1,44 @@
 const Vehicle = require("../models/vehicleModel");
+const multer = require("multer");
 const APIFeatures = require("../utils/apiFeatures");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsyncError");
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/img");
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split("/")[1];
+    cb(
+      null,
+      `vehicle-${req.user.id}-${Date.now()}-${file.originalname}.${ext}`
+    );
+  },
+});
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Not a image, please upload only images!", 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+const uploadVehiclePhoto = upload.array("photos", 12);
+
+const setImageDestination = (files) => {
+  if (files) {
+    return files.map((file) => `${file.destination}/${file.filename}`);
+  } else {
+    return undefined;
+  }
+};
 
 const getAllVehicles = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(Vehicle.find(), req.query)
@@ -48,6 +85,7 @@ const createVehicle = catchAsync(async (req, res, next) => {
     fuel: req.body.fuel,
     description: req.body.description,
     user: req.user.id,
+    images: setImageDestination(req.files),
   });
   res.status(201).json({ status: "success", data: { vehicle: newVehicle } });
 });
@@ -80,6 +118,7 @@ const updateVehicle = catchAsync(async (req, res, next) => {
       color: req.body.color,
       fuel: req.body.fuel,
       description: req.body.description,
+      images: req.body.images || setImageDestination(req.files),
     },
     {
       new: true,
@@ -128,7 +167,7 @@ const changeVehicleStatus = catchAsync(async (req, res, next) => {
 });
 
 const uploadImage = (req, res, next) => {
-  console.log(req.file);
+  console.log(req.files);
   console.log(req.body);
   res.status(201).json({ status: "success" });
 };
@@ -140,4 +179,6 @@ module.exports = {
   updateVehicle,
   deleteVehicle,
   changeVehicleStatus,
+  uploadImage,
+  uploadVehiclePhoto,
 };

@@ -109,6 +109,7 @@ const vehicleSchema = new mongoose.Schema({
     },
     default: "pending",
   },
+  images: [],
 });
 
 const Vehicle = mongoose.model("Vehicle", vehicleSchema);
