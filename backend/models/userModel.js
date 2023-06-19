@@ -43,9 +43,7 @@ const userSchema = new mongoose.Schema({
       },
       message: "Password and confirm password must match!",
     },
-    savedSearches: {
-      type: String,
-    },
+    savedSearches: [],
   },
   passwordChangedAt: Date,
 });
