@@ -166,12 +166,6 @@ const changeVehicleStatus = catchAsync(async (req, res, next) => {
     .json({ status: "success", data: { vehicle: updatedVehicle } });
 });
 
-const uploadImage = (req, res, next) => {
-  console.log(req.files);
-  console.log(req.body);
-  res.status(201).json({ status: "success" });
-};
-
 module.exports = {
   getAllVehicles,
   createVehicle,
@@ -179,6 +173,5 @@ module.exports = {
   updateVehicle,
   deleteVehicle,
   changeVehicleStatus,
-  uploadImage,
   uploadVehiclePhoto,
 };

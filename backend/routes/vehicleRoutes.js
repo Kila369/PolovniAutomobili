@@ -14,12 +14,6 @@ router
     vehicleController.createVehicle
   );
 
-// router.post(
-//   "/upload",
-//   authContoller.protect,
-//   vehicleController.uploadVehiclePhoto,
-//   vehicleController.uploadImage
-// );
 router
   .route("/:id")
   .get(vehicleController.getVehicle)
