@@ -21,7 +21,7 @@
 <link href="assets/css/bootstrap-slider.min.css" rel="stylesheet">
 <!--FontAwesome Font Style -->
 <link href="assets/css/fontawesome.min.css" rel="stylesheet">
-
+<link href="assets/css/carGrid.css" rel="stylesheet">
 <!-- Fav and touch icons -->
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/images/favicon-icon/apple-touch-icon-144-precomposed.png">
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/favicon-icon/apple-touch-icon-114-precomposed.png">
@@ -36,7 +36,25 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->  
+<script src="index.js"></script>
+<script>
+  
+  window.onload = function() {
+    hidden()
+    getAllVehicles()
+    vehicleHandler()
+    
+    };
+  
+  
+
+  function handleClick() {
+  alert("Oglas je sacuvan!");
+}
+</script>
 </head>
+
+
 <body>
 
 <div id = "header"></div>
@@ -58,307 +76,220 @@
   <div class="dark-overlay"></div>
 </section>
 <!-- /Page Header--> 
+<script>
+  function vehicleHandler(){
+  var arrayVehicle = [];
+  
+  if (window.location.search.length === 0) {
+   
 
+  fetch('http://localhost:3000/api/v1/vehicles?status=approved', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+    
+        if (data.status === 'success' && Array.isArray(data.data.vehicles)) {
+          data.data.vehicles.forEach(vehicle => {
+  
+            arrayVehicle.push(vehicle)
+            
+          });
+  
+  
+  
+        } else {
+          console.error('Error: Failed to retrieve vehicle data.');
+          
+        }});
+      
+      }
+      else {
+      let link = 'http://localhost:3000/api/v1/vehicles?status=approved&';  
+      const queryString = window.location.search;
+      const queryStringWithoutQuestionMark = queryString.slice(1);
+      const keyValuePairs = queryStringWithoutQuestionMark.split('&');
+      const queryArray = keyValuePairs.map(keyValue => {
+        
+        const [key, value] = keyValue.split('=');
+        return { key, value };
+      });
+      const filteredArray = queryArray.filter(query => query.value !== '');
+      filteredArray.forEach(query=> {
+        
+            link+= query.key + '=' + query.value;
+            if (filteredArray.indexOf(query) < filteredArray.length - 1) {
+                link += '&';
+                
+            }
+            
+        }
+      )
+      fetch(link, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success' && Array.isArray(data.data.vehicles)) {
+          data.data.vehicles.forEach(vehicle => {
+
+            arrayVehicle.push(vehicle)
+          
+          });
+  
+  
+  
+        } else {
+          console.error('Error: Failed to retrieve vehicle data.');
+        }});
+      }
+      
+   // console.log(arrayVehicle);
+   
+    for (let i = 0; i < arrayVehicle.length; i++) {
+      const element = arrayVehicle[i];
+      console.log(element);
+     /* generisanjeKoda(element['mileage'], element['bodyType'], element['year'], element['fuel'], element['name'], element['price']); */
+    }
+    }
+    
+</script>
+<script>
+  function generisanjeKoda(carKilometers, carBodytype, carYear, carFuel,carName,carPrice){
+    
+    // Create a div element with class "col-md-4 grid_listing"
+const divColMd4 = document.createElement('div');
+divColMd4.className = 'col-md-4 grid_listing';
+
+// Create a div element with class "product-listing-m gray-bg"
+const divProductListing = document.createElement('div');
+divProductListing.className = 'product-listing-m gray-bg';
+
+// Create a div element with class "product-listing-img"
+const divProductListingImg = document.createElement('div');
+divProductListingImg.className = 'product-listing-img';
+
+// Create an anchor element with href "carGrid.html"
+const anchor = document.createElement('a');
+anchor.href = 'carGrid.html';
+
+// Create an image element with src "assets/images/featured-img-1.jpg" and class "img-fluid"
+const image = document.createElement('img');
+image.src = 'assets/images/featured-img-1.jpg';
+image.className = 'img-fluid';
+
+// Append the image element to the anchor element
+anchor.appendChild(image);
+
+// Create a div element with class "label_icon1"
+const divLabelIcon1 = document.createElement('div');
+divLabelIcon1.className = 'label_icon1';
+
+// Create a button element with class "btnic" and onclick event handler "handleClick()"
+const button = document.createElement('button');
+button.className = 'btnic';
+button.onclick = handleClick;
+
+// Create an icon element with class "fa fa-folder" and aria-hidden attribute set to "true"
+const icon = document.createElement('i');
+icon.className = 'fa fa-folder';
+icon.setAttribute('aria-hidden', 'true');
+
+// Append the icon element to the button element
+button.appendChild(icon);
+
+// Append the button element to the divLabelIcon1 element
+divLabelIcon1.appendChild(button);
+
+// Append the anchor, divLabelIcon1, and divProductListingImg to the divProductListing
+divProductListingImg.appendChild(anchor);
+divProductListingImg.appendChild(divLabelIcon1);
+
+// Create a div element with class "product-listing-content"
+const divProductListingContent = document.createElement('div');
+divProductListingContent.className = 'product-listing-content';
+
+// Create an h5 element with an anchor element inside
+const h5 = document.createElement('h5');
+const anchorInsideH5 = document.createElement('a');
+anchorInsideH5.href = 'carGrid.html';
+anchorInsideH5.textContent = carName;
+
+// Append the anchorInsideH5 to the h5 element
+h5.appendChild(anchorInsideH5);
+
+// Create a p element with class "list-price" and text content "$89,000"
+const pListPrice = document.createElement('p');
+pListPrice.className = 'list-price';
+pListPrice.textContent = '$'+carPrice;
+
+// Create an unordered list element with class "features_list" and list items inside
+const ulFeaturesList = document.createElement('ul');
+ulFeaturesList.className = 'features_list';
+
+const features = [carKilometers, carBodytype, carYear, carFuel];
+
+// Loop through the features array and create a list item for each feature
+features.forEach(feature => {
+  const li = document.createElement('li');
+  const iconFeature = document.createElement('i');
+  switch (feature) {
+    case carKilometers:
+      iconFeature.className = 'fa fa-road';
+      break;
+    case carBodytype:
+      iconFeature.className = 'fa fa-tachometer';
+      break;
+    case carYear:
+      iconFeature.className = 'fa fa-calendar';
+      break;
+    case carFuel:
+      iconFeature.className = 'fa fa-car';
+      break;
+  }
+  iconFeature.setAttribute('aria-hidden', 'true');
+  li.appendChild(iconFeature);
+  li.textContent = feature;
+  ulFeaturesList.appendChild(li);
+});
+
+// Append the h5, pListPrice, divCarLocation, and ulFeaturesList to the divProductListingContent
+divProductListingContent.appendChild(h5);
+divProductListingContent.appendChild(pListPrice);
+divProductListingContent.appendChild(ulFeaturesList);
+
+// Append the divProductListingImg and divProductListingContent to the divProductListing
+divProductListing.appendChild(divProductListingImg);
+divProductListing.appendChild(divProductListingContent);
+
+// Append the divProductListing to the divColMd4
+divColMd4.appendChild(divProductListing);
+
+// Append the divColMd4 to the desired parent element on the page
+const parentElement = document.getElementById('pozivanjeHTML'); 
+parentElement.appendChild(divColMd4);
+  }
+</script>
 <!--Listing-grid-view-->
 <section class="listing-page">
   <div class="container">
     <div class="row">
       <div class="col-md-9 col-md-push-3">
-	  <div class="mobile_search">
-		 <div class="sidebar_widget">
-          <div class="widget_heading">
-            <h5><i class="fa fa-filter" aria-hidden="true"></i> Pretrazite vozila </h5>
-          </div>
-          <div class="sidebar_filter">
-            <form action="#" method="get">
-              <div class="form-group select">
-                <select class="form-control">
-                  <option>Izaberite lokaciju</option>
-                  <option>Lokacija 1</option>
-                  <option>Lokacija 2</option>
-                </select>
-              </div>
-              <div class="form-group select">
-                <select class="form-control">
-                  <option>Sve marke</option>
-                  <option>Marka 1</option>
-                  <option>Marka 2</option>
-                </select>
-              </div>
-              <div class="form-group select">
-                <select class="form-control">
-                  <option>Svi modeli</option>
-                  <option>Model 1</option>
-                  <option>Model 2</option>
-                </select>
-              </div>
-              <div class="form-group select">
-                <select class="form-control">
-                  <option>Godiste </option>
-                  <option>2023</option>
-                  <option>2022</option>
-                  <option>2021</option>
-                </select>
-              </div>
-              
-              <div class="form-group select">
-                <select class="form-control">
-                  <option>Cena </option>
-                  <option>do 1000e</option>
-                  <option>do 5000e</option>
-                  <option>do 10000e</option>
-                  <option>do 20000e</option>
-                  <option>do 50000e</option>    
-                </select>
-              </div>
-              <div class="form-group select">
-                <select class="form-control">
-                  <option>Tip vozila </option>
-                  <option>Novo vozilo</option>
-                  <option>Polovno vozilo</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <button type="submit" class="btn btn-block"><i class="fa fa-search" aria-hidden="true"></i>Pretrazite vozila</button>
-              </div>
-            </form>
-          </div>
-        </div>
-	   </div>
-        <div class="result-sorting-wrapper">
-          <div class="sorting-count">
-            <p>1 - 12 <span>od 50 rezultata vase pretrage.</span></p>
-          </div>
-          <div class="result-sorting-by">
-            <p>Sort by:</p>
-            <form action="#" method="post">
-              <div class="form-group select sorting-select">
-                <select class="form-control ">
-                  <option>Cena (nize ka visem)</option>
-                  <option>Cena (vise ka nizem)</option>
-                  <option>Najnovija vozila</option>
-                </select>
-              </div>
-            </form>
-          </div>
-        </div>
         <div class="row">
-          <div class="col-md-4 grid_listing">
-            <div class="product-listing-m gray-bg">
-              <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-1.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Novo</div>
-              </div>
-              <div class="product-listing-content">
-                <h5><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h5>
-                <p class="list-price">$89,000</p>
-                <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
-                <ul class="features_list">
-                  <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
-                  <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
-                  <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
-                  <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
-                </ul>
-              </div>
-            </div>
+         
+          <div id="pozivanjeHTML">
+            
+           
+            
           </div>
-          <div class="col-md-4 grid_listing">
-            <div class="product-listing-m gray-bg">
-              <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-2.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Polovno</div>
-              </div>
-              <div class="product-listing-content">
-                <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
-                <p class="list-price">$89,000</p>
-                <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
-                <ul class="features_list">
-                  <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
-                  <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
-                  <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
-                  <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 grid_listing">
-            <div class="product-listing-m gray-bg">
-              <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-3.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Novo</div>
-              </div>
-              <div class="product-listing-content">
-                <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
-                <p class="list-price">$89,000</p>
-                <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
-                <ul class="features_list">
-                  <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
-                  <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
-                  <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
-                  <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 grid_listing">
-            <div class="product-listing-m gray-bg">
-              <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-3.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Novo</div>
-              </div>
-              <div class="product-listing-content">
-                <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
-                <p class="list-price">$89,000</p>
-                <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
-                <ul class="features_list">
-                  <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
-                  <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
-                  <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
-                  <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 grid_listing">
-            <div class="product-listing-m gray-bg">
-              <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-1.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Novo</div>
-              </div>
-              <div class="product-listing-content">
-                <h5><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h5>
-                <p class="list-price">$89,000</p>
-                <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
-                <ul class="features_list">
-                  <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
-                  <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
-                  <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
-                  <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 grid_listing">
-            <div class="product-listing-m gray-bg">
-              <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-2.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Polovno</div>
-              </div>
-              <div class="product-listing-content">
-                <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
-                <p class="list-price">$89,000</p>
-                <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
-                <ul class="features_list">
-                  <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
-                  <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
-                  <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
-                  <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 grid_listing">
-            <div class="product-listing-m gray-bg">
-              <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-1.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Polovno</div>
-              </div>
-              <div class="product-listing-content">
-                <h5><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h5>
-                <p class="list-price">$89,000</p>
-                <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
-                <ul class="features_list">
-                  <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
-                  <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
-                  <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
-                  <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 grid_listing">
-            <div class="product-listing-m gray-bg">
-              <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-2.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Novo</div>
-              </div>
-              <div class="product-listing-content">
-                <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
-                <p class="list-price">$89,000</p>
-                <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
-                <ul class="features_list">
-                  <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
-                  <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
-                  <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
-                  <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 grid_listing">
-            <div class="product-listing-m gray-bg">
-              <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-3.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Polovno</div>
-              </div>
-              <div class="product-listing-content">
-                <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
-                <p class="list-price">$89,000</p>
-                <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
-                <ul class="features_list">
-                  <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
-                  <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
-                  <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
-                  <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 grid_listing">
-            <div class="product-listing-m gray-bg">
-              <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-3.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Polovno</div>
-              </div>
-              <div class="product-listing-content">
-                <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
-                <p class="list-price">$89,000</p>
-                <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
-                <ul class="features_list">
-                  <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
-                  <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
-                  <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
-                  <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 grid_listing">
-            <div class="product-listing-m gray-bg">
-              <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-1.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Novo</div>
-              </div>
-              <div class="product-listing-content">
-                <h5><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h5>
-                <p class="list-price">$89,000</p>
-                <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
-                <ul class="features_list">
-                  <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
-                  <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
-                  <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
-                  <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 grid_listing">
-            <div class="product-listing-m gray-bg">
-              <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-2.jpg" class="img-fluid" alt="image" /> </a>
-                <div class="label_icon">Polovno</div>
-              </div>
-              <div class="product-listing-content">
-                <h5><a href="#">Maserati QUATTROPORTE 1,6</a></h5>
-                <p class="list-price">$89,000</p>
-                <div class="car-location"><span><i class="fa fa-map-marker" aria-hidden="true"></i> Colorado, USA</span></div>
-                <ul class="features_list">
-                  <li><i class="fa fa-road" aria-hidden="true"></i>35,000 km</li>
-                  <li><i class="fa fa-tachometer" aria-hidden="true"></i>30.000 miles</li>
-                  <li><i class="fa fa-calendar" aria-hidden="true"></i>2005 model</li>
-                  <li><i class="fa fa-car" aria-hidden="true"></i>Diesel</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          
+
         </div>
         <div class="pagination">
           <ul>
@@ -380,49 +311,70 @@
           <div class="sidebar_filter">
             <form action="#" method="get">
               <div class="form-group select">
-                <select class="form-control">
-                  <option>Izaberite lokaciju</option>
-                  <option>Lokacija 1</option>
-                  <option>Lokacija 2</option>
+                <select class="form-control" id="vehicleType" name="vehicleType">
+                  <option value="">Izaberite tip</option>
+                 
                 </select>
               </div>
               <div class="form-group select">
-                <select class="form-control">
-                  <option>Izaberite marku</option>
-                  <option>Audi</option>
-                  <option>BMW</option>
+                <select class="form-control" id="make" name="make">
+                  <option value="">Izaberite marku</option>
+                  
                 </select>
               </div>
               <div class="form-group select">
-                <select class="form-control">
-                  <option>Izaberite model</option>
-                  <option>Model 1</option>
-                  <option>Model 2</option>
+                <select class="form-control" id="model" name="model">
+                  <option value="">Izaberite model</option>
+                 
                 </select>
               </div>
               <div class="form-group select">
-                <select class="form-control">
-                  <option>Godiste </option>
-                  <option>2023</option>
-                  <option>2022</option>
-                  <option>2021</option>
+                <select class="form-control" id="year" name="year">
+                  <option value="">Godiste </option>
+            
                 </select>
               </div>
               <div class="form-group select">
-                <select class="form-control">
-                  <option>Cena </option>
-                  <option>do 1000e</option>
-                  <option>do 5000e</option>
-                  <option>do 10000e</option>
-                  <option>do 20000e</option>
-                  <option>do 50000e</option>    
+                <select class="form-control" id="price" name="price">
+                  <option value="">Cena </option>
+                
                 </select>
               </div>
               <div class="form-group select">
-                <select class="form-control">
-                  <option>Tip vozila </option>
-                  <option>Novo vozilo</option>
-                  <option>Polovno vozilo</option>
+                <select class="form-control" id="mileage" name="mileage">
+                  <option value="">Kilometraza </option>
+                 
+                </select>
+              </div>
+              <div class="form-group select">
+                <select class="form-control" id="bodyType" name="bodyType">
+                  <option value="">Karoserija </option>
+                 
+                </select>
+              </div>
+              <div class="form-group select">
+                <select class="form-control" id="condition" name="condition">
+                  <option value="">Stanje </option>
+                </select>
+              </div>
+              <div class="form-group select">
+                <select class="form-control" id="color" name="color">
+                  <option value="">Boja </option>
+                </select>
+              </div>
+              <div class="form-group select">
+                <select class="form-control" id="wheelDrive" name="wheelDrive">
+                  <option value="">Pogon </option>
+                </select>
+              </div>
+              <div class="form-group select">
+                <select class="form-control" id="power" name="power">
+                  <option value="">KS </option>
+                </select>
+              </div>
+              <div class="form-group select">
+                <select class="form-control" id="fuel" name="fuel">
+                  <option value="">Gorivo </option>
                 </select>
               </div>
               <div class="form-group">
@@ -454,12 +406,12 @@
 <script src="assets/js/bootstrap.min.js"></script> 
 <script src="assets/js/interface.js"></script> 
 <script src="assets/js/31f5977fdc.js"></script>
-<script src="index.js"></script>
+<script src="header.js" ></script>
+<script src="createvehicle.js" type="text/javascript"></script>
 <!--bootstrap-slider-JS--> 
 <script src="assets/js/bootstrap-slider.min.js"></script> 
 <!--Slider-JS--> 
 <script src="assets/js/slick.min.js"></script> 
 <script src="assets/js/owl.carousel.min.js"></script>
-
 </body>
 </html>

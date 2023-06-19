@@ -77,7 +77,16 @@
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
 <![endif]-->
+<script src="index.js" type="text/javascript"></script>
 
+
+<script type="text/javascript">
+  
+  window.onload = function() {
+    getAllVehicles()
+    hidden()
+  }
+</script>
 </head>
 
 <body id="index1">
@@ -122,151 +131,97 @@
 <!-- Filter-Form -->
 
 <section id="filter_form" class="gray-bg">
-
   <div class="container">
-
     <h3>Pretrazite ponudu:</h3>
-
-    
-
-      <form action="#" method="get">
-
-	  <div class="row">
-
+    <form id="vehicleList" action="#" method="get">
+      <div class="row">
         <div class="form-group col-md-3 col-sm-6 black_input">
-
           <div class="select">
-
-            <select class="form-control">
-
-              <option value="">Lokacija </option>
-
-              <option value="">Lokacija 1 </option>
-
-              <option value="">Lokacija 2 </option>
-
+            <select id="make" name="make" class="form-control">
             </select>
-
           </div>
-
         </div>
-
         <div class="form-group col-md-3 col-sm-6 black_input">
-
           <div class="select">
-
-            <select class="form-control">
-
-              <option>Sve marke</option>
-
-              <option>Audi</option>
-
-              <option>BMW</option>
-
-              <option>Nissan</option>
-
-              <option>Toyota</option>
-
-            </select>
-
-          </div>
-
-        </div>
-
-        <div class="form-group col-md-3 col-sm-6 black_input">
-
-          <div class="select">
-
-            <select class="form-control">
-
+            <select id="model" name="model" class="form-control">
               <option>Svi modeli</option>
-
-              <option>Model 1</option>
-
-              <option>Model 2</option>
-
-              <option>Model 3</option>
-
             </select>
-
           </div>
-
         </div>
-
         <div class="form-group col-md-3 col-sm-6 black_input">
-
           <div class="select">
-
-            <select class="form-control">
-
+            <select id="vehicleType" name="vehicleType" class="form-control">
+              <option>Tip</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-md-3 col-sm-6 black_input">
+          <div class="select">
+            <select id="year" name="year" class="form-control">
               <option>Godiste </option>
-
-              <option>2023</option>
-
-              <option>2022</option>
-
-              <option>2021</option>
-
             </select>
-
           </div>
-
         </div>
-
-        <div class="form-group col-md-6 col-sm-6 black_input">
-
-          <div class="select">
-
-            <select class="form-control">
-
-              <option>Cena</option>
-
-              <option>do 1000e</option>
-              <option>do 5000e</option>
-              <option>do 10000e</option>
-              <option>do 20000e</option>
-              <option>do 50000e</option>
-            
-
-            </select>
-
-          </div>
-
-        </div>
-        
         <div class="form-group col-md-3 col-sm-6 black_input">
-
           <div class="select">
-
-            <select class="form-control">
-
-              <option>Tip vozila </option>
-
-              <option>Novo vozilo</option>
-
-              <option>Polovno vozilo</option>
-
+            <select id="condition" name="condition" class="form-control">
             </select>
-
           </div>
-
         </div>
-
+        <div class="form-group col-md-6 col-sm-6 black_input">
+          <div class="select">
+            <select id="price" name="price" class="form-control">
+              <option>Cena</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-md-3 col-sm-6 black_input">
+          <div class="select">
+            <select id="wheelDrive" name="wheelDrive" class="form-control">
+            </select>
+          </div>
+        </div>
+        <!-- Remaining form groups -->
+        <div class="form-group col-md-3 col-sm-6 black_input">
+          <div class="select">
+            <select id="color" name="color" class="form-control">
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-md-3 col-sm-6 black_input">
+          <div class="select">
+            <select id="bodyType" name="bodyType" class="form-control">
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-md-3 col-sm-6 black_input">
+          <div class="select">
+            <select id="mileage" name="mileage" class="form-control">
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-md-3 col-sm-6 black_input">
+          <div class="select">
+            <select id="power" name="power" class="form-control">
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-md-3 col-sm-6 black_input">
+          <div class="select">
+            <select id="fuel" name="fuel" class="form-control">
+            </select>
+          </div>
+        </div>
         <div class="form-group col-md-3 col-sm-6">
-
-          <button type="submit" class="btn btn-block search"><i class="fa fa-search" aria-hidden="true"></i> Pretraga vozila </button>
-
+          <button type="submit" class="btn btnc-block search">
+            <i lass="fa fa-search" aria-hidden="true"></i> Pretraga vozila
+          </button>
         </div>
-
-		</div>
-
-      </form>
-
-    
-
+      </div>
+    </form>
   </div>
-
 </section>
+
 
 <!-- /Filter-Form --> 
 
@@ -948,7 +903,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="index.js"></script>
+
+
 
 <script src="assets/js/interface.js"></script> 
 
@@ -959,7 +915,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
+<script src="header.js"></script> 
+<script src="createvehicle.js" type="text/javascript"></script>
 <!--Slider-JS--> 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

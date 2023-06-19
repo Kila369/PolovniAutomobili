@@ -1,89 +1,47 @@
-<!--Register-Form -->
+<!-- Signup Form -->
 
 <div class="modal fade" id="signupform">
-
-    <div class="modal-dialog modal-lg" role="document">
-  
-      <div class="modal-content">
-  
-        <div class="modal-header">
-  
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  
-          <h3 class="modal-title">Registracija</h3>
-  
-        </div>
-  
-        <div class="modal-body">
-  
-          
-  
-            <div class="signup_wrap">
-  
-            <div class="row">
-  
-              <div class="col-md-15 col-sm-15">
-  
-                <form action="#" method="get">
-  
-                  <div class="form-group">
-  
-                    <input type="text" class="form-control" placeholder="Ime i prezime">
-  
-                  </div>
-  
-                  <div class="form-group">
-  
-                    <input type="email" class="form-control" placeholder="Email adresa">
-  
-                  </div>
-  
-                  <div class="form-group">
-  
-                    <input type="password" class="form-control" placeholder="Sifra">
-  
-                  </div>
-  
-                  <div class="form-group">
-  
-                    <input type="password" class="form-control" placeholder="Potvrdite sifru">
-  
-                  </div>
-  
-                  <div class="form-group checkbox">
-  
-                    <input type="checkbox" id="terms_agree">
-  
-                    <label for="terms_agree">Slazem se <a href="#">sa uslovima za koriscenje</a></label>
-  
-                  </div>
-  
-                  <div class="form-group">
-  
-                    <input type="submit" value="Registruj me" class="btn btn-block">
-  
-                  </div>
-  
-                </form>
-  
-              </div>
-  
-            </div>
-  
-          </div>
-  
-        </div>
-  
-        <div class="modal-footer text-center">
-  
-          <p>Vec imate nalog? <a href="#loginform" data-bs-toggle="modal" data-bs-dismiss="modal">Uloguj me</a></p>
-  
-        </div>
-  
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title">Registracija</h3>
       </div>
-  
+      <div class="modal-body">
+        <div class="signup_wrap">
+          <div class="row">
+            <div class="col-md-15 col-sm-15">
+              <form id="signupForm" method="post">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="name" placeholder="Ime i prezime">
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control" id="email1" placeholder="Email adresa">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" id="password1" placeholder="Sifra">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" id="confirmPassword" placeholder="Potvrdite sifru">
+                </div>
+                <div class="form-group checkbox">
+                  <input type="checkbox" id="terms_agree">
+                  <label for="terms_agree">Slazem se <a href="#">sa uslovima za koriscenje</a></label>
+                </div>
+                <div class="form-group">
+                  <button type="submit" id="registerdugme" class="btn btn-block">Registruj me</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer text-center">
+        <p>Vec imate nalog? <a href="#loginform" data-bs-toggle="modal" data-bs-dismiss="modal">Uloguj me</a></p>
+      </div>
     </div>
-  
   </div>
-  
-  <!--/Register-Form --> 
+</div>
+

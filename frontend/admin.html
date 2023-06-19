@@ -9,6 +9,7 @@
 <title>Polovnjaci</title>
 <!--Bootstrap -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <!--Custome Style -->
 <link rel="stylesheet" href="assets/css/style.css" type="text/css">
 <link rel="stylesheet" href="assets/css/custom.css" type="text/css">
@@ -22,6 +23,15 @@
 <!--FontAwesome Font Style -->
 <link href="assets/css/fontawesome.min.css" rel="stylesheet">
 
+<!-- SWITCHER -->
+		<link rel="stylesheet" id="switcher-css" type="text/css" href="assets/switcher/css/switcher.css" media="all" />
+		<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/red.css" title="red" media="all" data-default-color="true" />
+		<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/orange.css" title="orange" media="all" />
+		<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/blue.css" title="blue" media="all" />
+		<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/pink.css" title="pink" media="all" />
+		<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/green.css" title="green" media="all" />
+		<link rel="alternate stylesheet" type="text/css" href="assets/switcher/css/purple.css" title="purple" media="all" />
+        
 <!-- Fav and touch icons -->
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/images/favicon-icon/apple-touch-icon-144-precomposed.png">
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/favicon-icon/apple-touch-icon-114-precomposed.png">
@@ -45,8 +55,8 @@
 
 </script>
 </head>
-
 <body>
+
 
   <div id ="header"></div>
 
@@ -55,11 +65,11 @@
   <div class="container">
     <div class="page-header_wrap">
       <div class="page-heading">
-        <h1>Vas profil</h1>
+        <h1>Admin tabla</h1>
       </div>
       <ul class="coustom-breadcrumb">
         <li><a href="index.html">Pocetna</a></li>
-        <li>Profil</li>
+        <li>Admin tabla</li>
       </ul>
     </div>
   </div>
@@ -68,54 +78,52 @@
 </section>
 <!-- /Page Header--> 
 
-<!--Profile-setting-->
+<!--my-vehicles-->
 <section class="user_profile inner_pages">
   <div class="container">
     <div class="row">
       <div class="col-md-3 col-sm-3">
         <div class="profile_nav">
           <ul>
-            <li class="active"><a href="profile-settings.html">Podesavanje profila</a></li>
+            <li><a href="profile-settings.html">Podesavanja profila</a></li>
             <li><a href="my-vehicles.html">Oglasi koje pratim</a></li>
-            <li><a href="post-vehicle.html">Postavi oglas </a></li>
-            <li><a href="admin.html">Admin tabla</a></li>
-            <li><a href="#">Odjavi se</a></li>
+            <li><a href="post-vehicle.html">Postavi oglas</a></li>
+            <li class="active"><a href="admin.html">Admin tabla</a></li>
+            <li><a href="#">Odjavi me</a></li>
           </ul>
         </div>
       </div>
       <div class="col-md-6 col-sm-8">
         <div class="profile_wrap">
-          <h5 class="uppercase underline">Podesavanja profila</h5>
-          <form action="#" method="get">
-            <div class="form-group">
-              <label class="control-label">Ime i prezime </label>
-              <input class="form-control white_bg" id="fullname" type="text">
+          <h5 class="uppercase underline">Oglasi za odobravanje</h5>
+          <div class="my_vehicles_list">
+            <ul class="vehicle_listing">
+              <li>
+                <div class="vehicle_img"> <a href="#"><img src="assets/images/recent-car-1.jpg" alt="image"></a> </div>
+                <div class="vehicle_title">
+                  <h6><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h6>
+                </div>
+                <div class="vehicle_status"><button type="submit" class="btn btn-block" style="float: right; padding-left: 5px; width: 150px; text-align: inherit;"> Odobri vozilo</button>
+                  <div class="clearfix"></div>
+                  <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a> </div>
+              </li>
+            </ul>
+            <div class="pagination">
+              <ul>
+                <li class="current">1</li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+              </ul>
             </div>
-            <div class="form-group">
-              <label class="control-label">Email Adresa</label>
-              <input class="form-control white_bg" id="email" type="email">
-            </div>
-            <div class="gray-bg field-title">
-              <h6>Promeni sifru</h6>
-            </div>
-            <div class="form-group">
-              <label class="control-label">Nova Sifra</label>
-              <input class="form-control white_bg" id="password" type="password">
-            </div>
-            <div class="form-group">
-              <label class="control-label">Potrvrdi sifru</label>
-              <input class="form-control white_bg" id="c-password" type="password">
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn">Zapamti<span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!--/Profile-setting--> 
+<!--/my-vehicles--> 
 
 <div id ="footer"></div>
 <div id="login"></div>
@@ -125,15 +133,16 @@
 <!-- Scripts --> 
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script> 
-<script src="assets/js/interface.js"></script> 
-<script src="assets/js/31f5977fdc.js"></script>
+<script src="assets/js/interface.js"></script>
+<script src="assets/js/31f5977fdc.js"></script> 
 
 <!--bootstrap-slider-JS--> 
 <script src="assets/js/bootstrap-slider.min.js"></script> 
 <!--Slider-JS--> 
 <script src="assets/js/slick.min.js"></script> 
 <script src="assets/js/owl.carousel.min.js"></script>
-<script src="header.js" ></script>
+<script src="header.js"></script>
+
 
 </body>
 </html>
