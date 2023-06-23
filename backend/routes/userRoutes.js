@@ -8,17 +8,14 @@ const router = express.Router();
 router.post("/singup", authContoller.singup);
 router.post("/login", authContoller.login);
 
-router
-  .route("/")
-  .get(userController.getAllUsers)
-  .post(userController.createUser);
+router.route("/").get(userController.getAllUsers);
 
 router
   .route("/:id")
-  .get(userController.getUser)
-  .patch(userController.updateUser)
-  .delete(userController.deleteUser);
+  .get(authContoller.protect, userController.getUser)
+  .patch(authContoller.protect, userController.updateUser)
+  .delete(authContoller.protect, userController.deleteUser);
 
-router.route("/:id/search").post(userController.saveSearch);
+router.route("/search").post(authContoller.protect, userController.saveSearch);
 
 module.exports = router;

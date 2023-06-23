@@ -1,6 +1,6 @@
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsyncError");
-// const AppError = require('../utils/appError');
+const AppError = require("../utils/appError");
 
 const getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find();
@@ -15,7 +15,7 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 const saveSearch = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.user.id);
   let searches = user.savedSearches;
   if (searches) {
     searches.push(req.body);
@@ -24,7 +24,7 @@ const saveSearch = catchAsync(async (req, res, next) => {
   }
 
   const updatedUser = await User.findByIdAndUpdate(
-    req.params.id,
+    req.user.id,
     { savedSearches: searches },
     { new: true }
   );
@@ -37,25 +37,39 @@ const saveSearch = catchAsync(async (req, res, next) => {
   });
 });
 
-const createUser = (req, res) => {
-  res.status(500).json({
-    status: "error",
-    message: "This route is not yet defined!",
-  });
-};
-const getUser = (req, res) => {
-  res.status(500).json({
-    status: "error",
-    message: "This route is not yet defined!",
-  });
-};
-const updateUser = catchAsync(async (req, res, next) => {
-  const { name, email, password } = req.body;
+const getUser = catchAsync(async (req, res, next) => {
+  if (!(req.user.role === "admin") && !(req.user.id === req.params.id)) {
+    return next(
+      new AppError("You do not have permission to perform this action!", 403)
+    );
+  }
+  const user = await User.findById(req.params.id);
 
+  res.status(200).json({
+    status: "success",
+    data: {
+      user: user,
+    },
+  });
+});
+
+const updateUser = catchAsync(async (req, res, next) => {
+  if (!(req.user.role === "admin") && !(req.user.id === req.params.id)) {
+    return next(
+      new AppError("You do not have permission to perform this action!", 403)
+    );
+  }
   const updatedUser = await User.findByIdAndUpdate(
     req.params.id,
-    { name, email, password },
-    { new: true, runValidators: true }
+    {
+      name: req.body.name,
+      email: req.body.email,
+      savedSearches: req.body.savedSearches,
+    },
+    {
+      new: true,
+    }
+
   );
 
   res.status(200).json({
@@ -66,17 +80,35 @@ const updateUser = catchAsync(async (req, res, next) => {
   });
 });
 
-const deleteUser = (req, res) => {
-  res.status(500).json({
-    status: "error",
-    message: "This route is not yet defined!",
+const deleteUser = catchAsync(async (req, res, next) => {
+  if (!(req.user.role === "admin") && !(req.user.id === req.params.id)) {
+    return next(
+      new AppError("You do not have permission to perform this action!", 403)
+    );
+  }
+  await User.findByIdAndDelete(
+    req.params.id,
+    {
+      name: req.body.name,
+      email: req.body.email,
+      savedSearches: req.body.savedSearches,
+    },
+    {
+      new: true,
+    }
+  );
+
+  res.status(204).json({
+    status: "success",
+    data: {
+      user: null,
+    },
   });
-};
+});
 
 module.exports = {
   getAllUsers,
   getUser,
-  createUser,
   updateUser,
   deleteUser,
   saveSearch,
