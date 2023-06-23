@@ -49,12 +49,22 @@ const getUser = (req, res) => {
     message: "This route is not yet defined!",
   });
 };
-const updateUser = (req, res) => {
-  res.status(500).json({
-    status: "error",
-    message: "This route is not yet defined!",
+const updateUser = catchAsync(async (req, res, next) => {
+  const { name, email, password } = req.body;
+
+  const updatedUser = await User.findByIdAndUpdate(
+    req.params.id,
+    { name, email, password },
+    { new: true, runValidators: true }
+  );
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      user: updatedUser,
+    },
   });
-};
+});
 
 const deleteUser = (req, res) => {
   res.status(500).json({

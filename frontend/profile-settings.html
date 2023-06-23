@@ -40,7 +40,75 @@
 <script>
   
   window.onload = function() {
-    hidden()
+    hidden();
+    changeUserDetails()
+   
+    function changeUserDetails(){
+    const fullnameInput = document.getElementById('fullname');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('newpassword');
+
+   
+    const name = localStorage.getItem('name');
+    const email = localStorage.getItem('email');
+
+    
+    if (name) {
+      fullnameInput.value = name;
+    }
+
+    if (email) {
+      emailInput.value = email;
+    }
+
+    
+    const form = document.getElementById('profileForm');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const newEmail = emailInput.value;
+      const newName = fullnameInput.value;
+      localStorage.setItem('name', newName); 
+      localStorage.setItem('email', newEmail); 
+
+      
+      const newPassword = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+      const userID = localStorage.getItem("id");
+
+        if (newPassword === confirmPassword) {
+            try {
+              const response = await fetch(`http://localhost:3000/api/v1/users/${userID}`, {
+                method: 'PATCH',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: newName, email: newEmail, password: newPassword }),
+              });
+
+              if (response.ok) {
+                
+                console.log('Update successful');
+              } else {
+                // Update failed
+                console.log('Update failed');
+              }
+            } catch (error) {
+              console.error('Error:', error.message);
+              alert('An error occurred. Please try again later.');
+            }
+          } else {
+            alert('Sifre se ne poklapaju, probajte ponovo.');
+            return;
+          } 
+
+      
+    
+    });}
+
+
   }
 
 </script>
@@ -78,7 +146,7 @@
             <li class="active"><a href="profile-settings.html">Podesavanje profila</a></li>
             <li><a href="my-vehicles.html">Oglasi koje pratim</a></li>
             <li><a href="post-vehicle.html">Postavi oglas </a></li>
-            <li><a href="admin.html">Admin tabla</a></li>
+            <li><a href="admin.html" id="admintabla" class="admin-tabla" >Admin tabla</a></li>
             <li><a href="#">Odjavi se</a></li>
           </ul>
         </div>
@@ -86,7 +154,7 @@
       <div class="col-md-6 col-sm-8">
         <div class="profile_wrap">
           <h5 class="uppercase underline">Podesavanja profila</h5>
-          <form action="#" method="get">
+          <form action="" method="get" id="profileForm">
             <div class="form-group">
               <label class="control-label">Ime i prezime </label>
               <input class="form-control white_bg" id="fullname" type="text">
@@ -104,7 +172,7 @@
             </div>
             <div class="form-group">
               <label class="control-label">Potrvrdi sifru</label>
-              <input class="form-control white_bg" id="c-password" type="password">
+              <input class="form-control white_bg" id="newpassword" type="password">
             </div>
             <div class="form-group">
               <button type="submit" class="btn">Zapamti<span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
