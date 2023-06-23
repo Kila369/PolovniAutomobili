@@ -77,14 +77,16 @@
     });
 
     const data = await response.json();
-
+    
     if (response.ok) {
       // Login successful
 
-      const { token, name } = data;
+      const { token, data: { user: { name, role, _id } } } = data;
       localStorage.setItem('email', email)
       localStorage.setItem('token', token);
       localStorage.setItem('name', name);
+      localStorage.setItem('role', role);
+      localStorage.setItem('id', _id);
       
       window.location.href = '/SI2/PolovniAutomobili/frontend/index.html';
     } else {
@@ -102,14 +104,34 @@
  
   function hidden(){
    
+
+    const adminTabla = document.querySelector(".admin-tabla");
+    const adminTabla1 = document.querySelector(".admin-tabla1");
+    const adminTabla2 = document.querySelector(".admin-tabla2");
+    const adminTabla3 = document.querySelector(".admin-tabla3");
+    const adminTabla4 = document.getElementById("admintabla");
+
     const loginbtn = document.getElementById("loginbtn");
     
     if (localStorage.getItem("token") !== null) {
       const name = localStorage.getItem("name");
       document.getElementById("user-name").textContent = name;
       loginbtn.hidden = true;
-      
-     
+    }
+    if (localStorage.getItem("role") === "user"){
+      adminTabla4.hidden = true;
+      if (adminTabla) {
+        adminTabla.hidden = true;
+      }
+      if (adminTabla1) {
+        adminTabla1.hidden = true;
+      }
+      if (adminTabla2) {
+        adminTabla2.hidden = true;
+      }
+      if (adminTabla3) {
+        adminTabla3.hidden = true;
+      }
     }
                     
   }
@@ -118,6 +140,8 @@
   localStorage.removeItem('email');
   localStorage.removeItem('name');
   localStorage.removeItem('token');
+  localStorage.removeItem('role');
+  localStorage.removeItem('id');
   window.location.href = '/SI2/PolovniAutomobili/frontend/index.html';
   
   }

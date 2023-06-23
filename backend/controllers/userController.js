@@ -37,6 +37,7 @@ const saveSearch = catchAsync(async (req, res, next) => {
   });
 });
 
+<<<<<<< HEAD
 const getUser = catchAsync(async (req, res, next) => {
   if (!(req.user.role === "admin") && !(req.user.id === req.params.id)) {
     return next(
@@ -44,6 +45,36 @@ const getUser = catchAsync(async (req, res, next) => {
     );
   }
   const user = await User.findById(req.params.id);
+=======
+const createUser = (req, res) => {
+  res.status(500).json({
+    status: "error",
+    message: "This route is not yet defined!",
+  });
+};
+const getUser = (req, res) => {
+  res.status(500).json({
+    status: "error",
+    message: "This route is not yet defined!",
+  });
+};
+const updateUser = catchAsync(async (req, res, next) => {
+  const { name, email, password } = req.body;
+
+  const updatedUser = await User.findByIdAndUpdate(
+    req.params.id,
+    { name, email, password },
+    { new: true, runValidators: true }
+  );
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      user: updatedUser,
+    },
+  });
+});
+>>>>>>> 936ee552b2b5254ef47a8eaa1d3d30979e3bfcf2
 
   res.status(200).json({
     status: "success",

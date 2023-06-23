@@ -51,7 +51,80 @@
   
   window.onload = function() {
     hidden()
-  }
+
+    renderSavedVehicles();
+}
+
+function renderSavedVehicles() {
+  const savedVehicles = JSON.parse(localStorage.getItem('savedVehicles')) || [];
+  const savedVehiclesList = document.getElementById('savedVehiclesList');
+  const savedVehicleCount = document.getElementById('savedVehicleCount');
+
+  savedVehiclesList.innerHTML = ''; 
+
+  savedVehicleCount.textContent = '(' + savedVehicles.length + ' Vozila)';
+
+  savedVehicles.forEach(savedVehicle => {
+    const li = document.createElement('li');
+
+    const divVehicleImg = document.createElement('div');
+    divVehicleImg.className = 'vehicle_img';
+
+    const anchor = document.createElement('a');
+    anchor.href = '#';
+
+    const image = document.createElement('img');
+    image.src = 'assets/images/recent-car-1.jpg';
+    image.alt = 'image';
+    anchor.appendChild(image);
+
+    divVehicleImg.appendChild(anchor);
+
+    const divVehicleTitle = document.createElement('div');
+    divVehicleTitle.className = 'vehicle_title';
+
+    const h6 = document.createElement('h6');
+    const anchorInsideH6 = document.createElement('a');
+    anchorInsideH6.href = '#';
+    anchorInsideH6.textContent = savedVehicle.carName;
+    h6.appendChild(anchorInsideH6);
+
+    divVehicleTitle.appendChild(h6);
+
+    const divVehicleStatus = document.createElement('div');
+    divVehicleStatus.className = 'vehicle_status';
+
+    const divClearfix = document.createElement('div');
+    divClearfix.className = 'clearfix';
+    divVehicleStatus.appendChild(divClearfix);
+
+    const anchorTrash = document.createElement('a');
+    anchorTrash.href = '#';
+    anchorTrash.addEventListener('click', function(event) {
+      event.preventDefault();
+      removeSavedVehicle(savedVehicle); 
+      li.remove(); 
+    });
+
+    const iconTrash = document.createElement('i');
+    iconTrash.className = 'fa fa-trash';
+    iconTrash.setAttribute('aria-hidden', 'true');
+    anchorTrash.appendChild(iconTrash);
+    divVehicleStatus.appendChild(anchorTrash);
+
+    li.appendChild(divVehicleImg);
+    li.appendChild(divVehicleTitle);
+    li.appendChild(divVehicleStatus);
+
+    savedVehiclesList.appendChild(li);
+  });
+
+  function removeSavedVehicle(savedVehicle) {
+  const savedVehicles = JSON.parse(localStorage.getItem('savedVehicles')) || [];
+  const updatedVehicles = savedVehicles.filter(vehicle => vehicle.carId !== savedVehicle.carId);
+  localStorage.setItem('savedVehicles', JSON.stringify(updatedVehicles));
+}
+}
 
 </script>
 </head>
@@ -88,80 +161,17 @@
             <li><a href="profile-settings.html">Podesavanja profila</a></li>
             <li class="active"><a href="my-vehicles.html">Oglasi koje pratim</a></li>
             <li><a href="post-vehicle.html">Postavi oglas</a></li>
-            <li><a href="admin.html">Admin tabla</a></li>
+            <li><a href="admin.html" id="admintabla1"  class="admin-tabla1">Admin tabla</a></li>
             <li><a href="#">Odjavi me</a></li>
           </ul>
         </div>
       </div>
       <div class="col-md-6 col-sm-8">
         <div class="profile_wrap">
-          <h5 class="uppercase underline">Oglasi koje pratim <span>(20 Vozila)</span></h5>
+          <h5 class="uppercase underline">Oglasi koje pratim <span id="savedVehicleCount"></span></h5>
           <div class="my_vehicles_list">
-            <ul class="vehicle_listing">
-              <li>
-                <div class="vehicle_img"> <a href="#"><img src="assets/images/recent-car-1.jpg" alt="image"></a> </div>
-                <div class="vehicle_title">
-                  <h6><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h6>
-                </div>
-                <div class="vehicle_status"> <a href="#" class="btn outline btn-xs active-btn">Aktivan</a>
-                  <div class="clearfix"></div>
-                  <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a> </div>
-              </li>
-              <li class="deactive_vehicle">
-                <div class="vehicle_img"> <a href="#"><img src="assets/images/recent-car-2.jpg" alt="image"></a> </div>
-                <div class="vehicle_title">
-                  <h6><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h6>
-                </div>
-                <div class="vehicle_status"> <a href="#" class="btn outline btn-xs">Deaktiviran</a>
-                  <div class="clearfix"></div>
-                  <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a> </div>
-              </li>
-              <li>
-                <div class="vehicle_img"> <a href="#"><img src="assets/images/recent-car-3.jpg" alt="image"></a> </div>
-                <div class="vehicle_title">
-                  <h6><a href="#">Ford Mustang 2.3 Ecoboost Premium </a></h6>
-                </div>
-                <div class="vehicle_status"> <a href="#" class="btn outline btn-xs active-btn">Aktivan</a>
-                  <div class="clearfix"></div>
-                  <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a> </div>
-              </li>
-              <li>
-                <div class="vehicle_img"> <a href="#"><img src="assets/images/recent-car-4.jpg" alt="image"></a> </div>
-                <div class="vehicle_title">
-                  <h6><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h6>
-                </div>
-                <div class="vehicle_status"> <a href="#" class="btn outline btn-xs active-btn">Aktivan</a>
-                  <div class="clearfix"></div>
-                  <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a> </div>
-              </li>
-              <li>
-                <div class="vehicle_img"> <a href="#"><img src="assets/images/recent-car-5.jpg" alt="image"></a> </div>
-                <div class="vehicle_title">
-                  <h6><a href="#">Mazda CX-5 SX, V6, ABS, Sunroof </a></h6>
-                </div>
-                <div class="vehicle_status"> <a href="#" class="btn outline btn-xs active-btn">Aktivan</a>
-                  <div class="clearfix"></div>
-                  <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a> </div>
-              </li>
-              <li>
-                <div class="vehicle_img"> <a href="#"><img src="assets/images/recent-car-3.jpg" alt="image"></a> </div>
-                <div class="vehicle_title">
-                  <h6><a href="#">Ford Mustang 2.3 Ecoboost Premium </a></h6>
-                </div>
-                <div class="vehicle_status"> <a href="#" class="btn outline btn-xs active-btn">Aktivan</a>
-                  <div class="clearfix"></div>
-                  <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a> </div>
-              </li>
+            <ul class="vehicle_listing" id="savedVehiclesList">
             </ul>
-            <div class="pagination">
-              <ul>
-                <li class="current">1</li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>

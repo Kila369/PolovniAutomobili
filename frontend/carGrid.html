@@ -93,15 +93,23 @@
       .then(data => {
         
         if (data.status === 'success' && Array.isArray(data.data.vehicles)) {
+
+          var productListingImage = document.querySelector('.product-listing-img');
           var productListingContent = document.querySelector('.product-listing-content');
 
+          productListingImage.querySelector('img').src = "../backend/" + data.data.vehicles[0]['images'][0];
           
           productListingContent.querySelector('h5 a').textContent = data.data.vehicles[0]['name'];
           productListingContent.querySelector('.list-price').textContent = data.data.vehicles[0]['price'] + '$';
-          productListingContent.querySelectorAll('.features_list li')[0].textContent = data.data.vehicles[0]['mileage'] + 'KM';
-          productListingContent.querySelectorAll('.features_list li')[1].textContent = data.data.vehicles[0]['bodyType'];
-          productListingContent.querySelectorAll('.features_list li')[2].textContent = data.data.vehicles[0]['year'];
-          productListingContent.querySelectorAll('.features_list li')[3].textContent = data.data.vehicles[0]['fuel'];
+          productListingContent.querySelectorAll('.features_list li')[0].textContent = data.data.vehicles[0]['make'];
+          productListingContent.querySelectorAll('.features_list li')[1].textContent = data.data.vehicles[0]['model'];
+          productListingContent.querySelectorAll('.features_list li')[2].textContent = data.data.vehicles[0]['mileage'] + 'KM';
+          productListingContent.querySelectorAll('.features_list li')[3].textContent = data.data.vehicles[0]['bodyType'];
+          productListingContent.querySelectorAll('.features_list li')[4].textContent = data.data.vehicles[0]['year'];
+          productListingContent.querySelectorAll('.features_list li')[5].textContent = data.data.vehicles[0]['power'] + 'KS';
+          productListingContent.querySelectorAll('.features_list li')[6].textContent = data.data.vehicles[0]['color'];
+          productListingContent.querySelectorAll('.features_list li')[7].textContent = data.data.vehicles[0]['wheelDrive'];
+          productListingContent.querySelectorAll('.features_list li')[8].textContent = data.data.vehicles[0]['condition'];
           console.log(data.data.vehicles[0]['color'])
   
         } else {
@@ -117,7 +125,7 @@
 
 <div class="col grid_listing" style="display:flex; padding-top: 50px;">
     <div class="product-listing-m gray-bg">
-      <div class="product-listing-img"> <a href="#"><img src="assets/images/featured-img-1.jpg" class="img-fluid" alt="image"> </a>
+      <div class="product-listing-img"> <img src="assets/images/featured-img-1.jpg" class="img-fluid" alt="image"> 
       </div>
       <div class="product-listing-content">
         <h5><a href="#" >ime oglasa </a></h5>
@@ -127,6 +135,12 @@
           <li><i class="fa fa-tachometer" aria-hidden="true"></i>Body type</li>
           <li><i class="fa fa-calendar" aria-hidden="true"></i>Year</li>
           <li><i class="fa fa-car" aria-hidden="true"></i>Fuel</li>
+          <li><i class="fa fa-car" aria-hidden="true"></i>Fuel</li>
+          <li><i class="fa fa-car" aria-hidden="true"></i>Fuel</li>
+          <li><i class="fa fa-car" aria-hidden="true"></i>Fuel</li>
+          <li><i class="fa fa-car" aria-hidden="true"></i>Fuel</li>
+          <li><i class="fa fa-car" aria-hidden="true"></i>Fuel</li>
+          
         </ul>
       </div>
     </div>
