@@ -118,23 +118,45 @@
       document.getElementById("user-name").textContent = name;
       loginbtn.hidden = true;
     }
-    if (localStorage.getItem("role") === "user"){
-      adminTabla4.hidden = true;
+    if (localStorage.getItem("role") === "user") {
+      if (adminTabla4) {
+        adminTabla4.hidden = true;
+      }
       if (adminTabla) {
-        adminTabla.hidden = true;
+        adminTabla.style.display = "none";
       }
       if (adminTabla1) {
-        adminTabla1.hidden = true;
+        adminTabla1.style.display = "none";
       }
       if (adminTabla2) {
-        adminTabla2.hidden = true;
+        adminTabla2.style.display = "none";
       }
       if (adminTabla3) {
-        adminTabla3.hidden = true;
+        adminTabla3.style.display = "none";
       }
     }
-                    
+  
+    const userRole = localStorage.getItem("role");
+    if (!userRole || userRole !== "admin") {
+      if (adminTabla) {
+        adminTabla.style.display = "none";
+      }
+      if (adminTabla1) {
+        adminTabla1.style.display = "none";
+      }
+      if (adminTabla2) {
+        adminTabla2.style.display = "none";
+      }
+      if (adminTabla3) {
+        adminTabla3.style.display = "none";
+      }
+      if (adminTabla4) {
+        adminTabla4.style.display = "none";
+      }
+    }
   }
+                    
+  
 
   function logout() {
   localStorage.removeItem('email');

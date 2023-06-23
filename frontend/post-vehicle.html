@@ -103,48 +103,39 @@
 
 
 
-      const formData = {
-        name: name,
-        make: make,
-        model: model,
-        bodyType: bodyType,
-        description: description,
-        price: price,
-        year: year,
-        mileage: mileage,
-        fuel: fuel,
-        vehicleType: vehicleType,
-        power: power,
-        wheelDrive: wheelDrive,
-        color: color,
-        condition: condition,
-        
-      };
+    const formData = new FormData();
 
-    
-   
-      let jsonData = JSON.stringify(formData);
+        formData.append('name', name);
+        formData.append('make', make);
+        formData.append('model', model);
+        formData.append('bodyType', bodyType);
+        formData.append('description', description);
+        formData.append('price', price);
+        formData.append('year', year);
+        formData.append('mileage', mileage);
+        formData.append('fuel', fuel);
+        formData.append('vehicleType', vehicleType);
+        formData.append('power', power);
+        formData.append('wheelDrive', wheelDrive);
+        formData.append('color', color);
+        formData.append('condition', condition);
 
-      // Convert JSON string to JavaScript object
-      jsonData = JSON.parse(jsonData);
+        images.forEach((image, index) => {
+          formData.append(`images[${index}]`, image);
+        });
 
-      // Add images property to the JavaScript object
-      jsonData.images = images;
-
-      // Convert JavaScript object back to JSON string
-      jsonData = JSON.stringify(jsonData);
-      console.log(images)
-      console.log(jsonData.images)
+       console.log(formData.get('images[0]'));
+      
     
     try {
       const token = localStorage.getItem('token');
       const response = await fetch('http://localhost:3000/api/v1/vehicles', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          
           'Authorization': `Bearer ${token}`
         },
-        body: jsonData
+        body: formData
       });
 
       const data = await response.json();

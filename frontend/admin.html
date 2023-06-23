@@ -55,82 +55,114 @@
   }
 
   function getVehicles() {
-      fetch('http://localhost:3000/api/v1/vehicles', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.status === 'success' && Array.isArray(data.data.vehicles)) {
-            const myVehiclesList = document.querySelector('.my_vehicles_list');
-            myVehiclesList.innerHTML = ''; // Clear existing content
+  fetch('http://localhost:3000/api/v1/vehicles', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success' && Array.isArray(data.data.vehicles)) {
+        const myVehiclesList = document.querySelector('.my_vehicles_list');
+        myVehiclesList.innerHTML = '';
 
-            data.data.vehicles.forEach(vehicle => {
-              if (vehicle.status === 'pending') {
-                const listItem = document.createElement('li');
-                listItem.innerHTML = `
-                  <div class="vehicle_img">
-                    <a href="#"><img src="assets/images/recent-car-1.jpg" alt="image"></a>
-                  </div>
-                  <div class="vehicle_title">
-                    <h6><a href="#">${vehicle.name}</a></h6>
-                  </div>
-                  <div class="vehicle_status">
-                    <button type="submit" class="btn btn-block approve-btn" style="float: right; padding-left: 5px; width: 150px; text-align: inherit;" data-vehicle-id="${vehicle._id}">Odobri vozilo</button>
-                    <div class="clearfix"></div>
-                    <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                  </div>
-                `;
+        data.data.vehicles.forEach(vehicle => {
+          if (vehicle.status === 'pending') {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+              <div class="vehicle_img">
+                <a href="#"><img src="assets/images/recent-car-1.jpg" alt="image"></a>
+              </div>
+              <div class="vehicle_title">
+                <h6><a href="#">${vehicle.name}</a></h6>
+              </div>
+              <div class="vehicle_status">
+                <button type="submit" class="btn btn-block approve-btn" style="float: right; padding-left: 5px; width: 150px; text-align: inherit;" data-vehicle-id="${vehicle._id}">Odobri vozilo</button>
+                <div class="clearfix"></div>
+                <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
+              </div>
+            `;
 
-                myVehiclesList.appendChild(listItem);
-              }
-            });
+            listItem.dataset.vehicleId = vehicle._id;
 
-            // Add event listeners to approve buttons
-            const approveButtons = document.querySelectorAll('.approve-btn');
-            approveButtons.forEach(button => {
-              button.addEventListener('click', approveVehicle);
-            });
-          } else {
-            console.error('Error: Failed to retrieve vehicle data.');
+            myVehiclesList.appendChild(listItem);
           }
-        })
-        .catch(error => {
-          console.error('Error:', error);
         });
-    }
 
-       function approveVehicle(event) {
-        const button = event.target;
-        const vehicleId = button.dataset.vehicleId;
-        const token = localStorage.getItem("token");
+        const approveButtons = document.querySelectorAll('.approve-btn');
+        approveButtons.forEach(button => {
+          button.addEventListener('click', approveVehicle);
+        });
 
-        fetch(`http://localhost:3000/api/v1/vehicles/${vehicleId}/status`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            status: 'approved', 
-          }),
-        })
-          .then(response => response.json())
-          .then(data => {
-            if (data.status === 'success') {
-              button.innerText = 'Vozilo odobreno';
-              button.disabled = true;
-            } else {
-              console.error('Error: Failed to approve the vehicle.');
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
+        document.addEventListener('click', function(event) {
+          if (event.target.classList.contains('fa-trash')) {
+            deleteVehicle(event);
+          }
+        });
+      } else {
+        console.error('Error: Failed to retrieve vehicle data.');
       }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+function approveVehicle(event) {
+  const button = event.target;
+  const vehicleId = button.dataset.vehicleId;
+  const token = localStorage.getItem('token');
+
+  fetch(`http://localhost:3000/api/v1/vehicles/${vehicleId}/status`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      status: 'approved',
+    }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        button.innerText = 'Vozilo odobreno';
+        button.disabled = true;
+      } else {
+        console.error('Error: Failed to approve the vehicle.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+function deleteVehicle(event) {
+  const trashIcon = event.target;
+  const listItem = trashIcon.closest('li');
+  const vehicleId = listItem.dataset.vehicleId;
+  const token = localStorage.getItem("token");
+
+  fetch(`http://localhost:3000/api/v1/vehicles/${vehicleId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+    .then(response => {
+      if (response.ok) {
+        listItem.remove();
+      } else {
+        console.error('Error: Failed to delete the vehicle.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
 
 </script>
 </head>
@@ -184,7 +216,7 @@
                 </div>
                 <div class="vehicle_status"><button type="submit" class="btn btn-block" style="float: right; padding-left: 5px; width: 150px; text-align: inherit;"> Odobri vozilo</button>
                   <div class="clearfix"></div>
-                  <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a> </div>
+                  <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a> </div>
               </li>
             </ul>
             <div class="pagination">

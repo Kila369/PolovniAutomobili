@@ -37,76 +37,73 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->  
 <script src="index.js"></script>
+
 <script>
   
   window.onload = function() {
     hidden();
     changeUserDetails()
-   
-    function changeUserDetails(){
-    const fullnameInput = document.getElementById('fullname');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const confirmPasswordInput = document.getElementById('newpassword');
+  
 
-   
-    const name = localStorage.getItem('name');
-    const email = localStorage.getItem('email');
+    async function changeUserDetails() {
+      const fullnameInput = document.getElementById('fullname');
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const confirmPasswordInput = document.getElementById('newpassword');
 
+      const name = localStorage.getItem('name');
+      const email = localStorage.getItem('email');
+
+      if (name) {
+        fullnameInput.value = name;
+      }
+
+      if (email) {
+        emailInput.value = email;
+      }
+
+      const form = document.getElementById('profileForm');
     
-    if (name) {
-      fullnameInput.value = name;
-    }
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
 
-    if (email) {
-      emailInput.value = email;
-    }
+        const newEmail = emailInput.value;
+        const newName = fullnameInput.value;
+        localStorage.setItem('name', newName);
+        localStorage.setItem('email', newEmail);
 
-    
-    const form = document.getElementById('profileForm');
-
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      const newEmail = emailInput.value;
-      const newName = fullnameInput.value;
-      localStorage.setItem('name', newName); 
-      localStorage.setItem('email', newEmail); 
-
+        const newPassword = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+        const userID = localStorage.getItem('id');
       
-      const newPassword = passwordInput.value;
-      const confirmPassword = confirmPasswordInput.value;
-      const userID = localStorage.getItem("id");
-
+       
         if (newPassword === confirmPassword) {
-            try {
-              const response = await fetch(`http://localhost:3000/api/v1/users/${userID}`, {
-                method: 'PATCH',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name: newName, email: newEmail, password: newPassword }),
-              });
+          try {
+          
 
-              if (response.ok) {
-                
-                console.log('Update successful');
-              } else {
-                // Update failed
-                console.log('Update failed');
-              }
-            } catch (error) {
-              console.error('Error:', error.message);
-              alert('An error occurred. Please try again later.');
+            const response = await fetch(`http://localhost:3000/api/v1/users/${userID}`, {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ name: newName, email: newEmail, password: newPassword }),
+            });
+
+            if (response.ok) {
+              console.log('Update successful');
+            } else {
+              console.log('Update failed');
             }
-          } else {
-            alert('Sifre se ne poklapaju, probajte ponovo.');
-            return;
-          } 
-
-      
-    
-    });}
+          } catch (error) {
+            console.error('Error:', error.message);
+            alert('An error occurred. Please try again later.');
+          }
+        } else {
+          alert('Passwords do not match, please try again.');
+          return;
+        }
+      });
+    }
 
 
   }

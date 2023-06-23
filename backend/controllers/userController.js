@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsyncError");
 const AppError = require("../utils/appError");
+const bcrypt = require('bcryptjs');
 
 const getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find();
@@ -59,13 +60,16 @@ const updateUser = catchAsync(async (req, res, next) => {
       new AppError("You do not have permission to perform this action!", 403)
     );
   }
+  
+  const hashedPassword = await bcrypt.hash(password, 12);
+
   const updatedUser = await User.findByIdAndUpdate(
     req.params.id,
     {
       name: req.body.name,
       email: req.body.email,
       savedSearches: req.body.savedSearches,
-    },
+      password : hashedPassword }, 
     {
       new: true,
     }
