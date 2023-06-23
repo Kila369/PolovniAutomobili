@@ -98,8 +98,8 @@
     const color = document.getElementById('color').value;
     const condition = document.getElementById('condition').value;
     
-    const fileInput = document.getElementById('images');
-    const images = Array.from(fileInput.files);
+    const fileInput = document.getElementById('photos');
+    const photos = Array.from(fileInput.files);
 
 
 
@@ -120,11 +120,12 @@
         formData.append('color', color);
         formData.append('condition', condition);
 
-        images.forEach((image, index) => {
-          formData.append(`images[${index}]`, image);
-        });
+        for(let i = 0; i < fileInput.files.length;i++){
+          let file = fileInput.files[i];
+          formData.append('photos',file, file.name)
+        }
 
-       console.log(formData.get('images[0]'));
+       console.log(formData.get('photos[0]'));
       
     
     try {
@@ -132,7 +133,7 @@
       const response = await fetch('http://localhost:3000/api/v1/vehicles', {
         method: 'POST',
         headers: {
-          
+          'Accept' : `multipart/form-data`,
           'Authorization': `Bearer ${token}`
         },
         body: formData
@@ -210,7 +211,7 @@
             <form id="image-form">
               <label for="image-upload">Izaberi slike:</label>
               <div id="image-preview"></div>
-              <input type="file" id="images" name="images" accept="image/*" multiple>
+              <input type="file" id="photos" name="photos" accept="image/*" multiple>
             </form>
             </div>
             <div class="gray-bg field-title">
