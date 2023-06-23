@@ -44,7 +44,11 @@ const userSchema = new mongoose.Schema({
       message: "Password and confirm password must match!",
     },
   },
-  savedSearches: [],
+  savedSearches: [{
+    carName: String,
+    carPrice: String,
+    carImage: String,
+  }],
   passwordChangedAt: Date,
 });
 

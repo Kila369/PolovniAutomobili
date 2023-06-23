@@ -52,6 +52,7 @@
   window.onload = function() {
     hidden()
     getVehicles()
+    getUsers()
   }
 
   function getVehicles() {
@@ -164,6 +165,79 @@ function deleteVehicle(event) {
 }
 
 
+function getUsers() {
+  fetch('http://localhost:3000/api/v1/users', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success' && Array.isArray(data.data.users)) {
+        const userList = document.querySelector('.my_user_list');
+        userList.innerHTML = '';
+
+        data.data.users.forEach(user => {
+          const listItem = document.createElement('li');
+          listItem.innerHTML = `
+            <div class="user_img">
+              <!-- <a href="#"><img src="assets/images/user.jpg" alt="user-image"></a> -->
+            </div>
+            <div class="vehicle_info">
+              <h6><a href="#">${user.name}</a></h6>
+              <p>Email: ${user.email}</p>
+              <p>Role: ${user.role}</p>
+              <div class="user_actions">
+                <a href="#"><i class="fa fa-trash" aria-hidden="true" data-user-id="${user._id}"></i></a>
+              </div>
+            </div>
+          `;
+
+          listItem.dataset.userId = user._id;
+
+          userList.appendChild(listItem);
+        });
+
+        document.addEventListener('click', function(event) {
+          if (event.target.classList.contains('fa-trash')) {
+            deleteUser(event);
+          }
+        });
+      } else {
+        console.error('Error: Failed to retrieve user data.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+function deleteUser(event) {
+  const trashIcon = event.target;
+  const listItem = trashIcon.closest('li');
+  const userId = listItem.dataset.userId;
+  const token = localStorage.getItem("token");
+
+  fetch(`http://localhost:3000/api/v1/users/${userId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+    .then(response => {
+      if (response.ok) {
+        listItem.remove();
+      } else {
+        console.error('Error: Failed to delete the user.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
 </script>
 </head>
 <body>
@@ -229,6 +303,23 @@ function deleteVehicle(event) {
               </ul>
             </div>
           </div>
+        </div>
+      </div>
+        <div class="col-md-3 col-sm-3">
+          <div class="my_user_list">
+            <ul class="vehicle_listing">
+              <li>
+                <!--  <div class="vehicle_img"> <a href="#"><img src="user.jpg" alt="image"></a> </div>-->
+                <div class="vehicle_title">
+                  <h6><a href="#">User# </a></h6>
+                </div>
+                <div class="vehicle_status"><button type="submit" class="btn btn-block" style="float: right; padding-left: 5px; width: 150px; text-align: inherit;"> Odobri vozilo</button>
+                  <div class="clearfix"></div>
+                  <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a> </div>
+              </li>
+            </ul>
+          </div>
+        </div>
         </div>
       </div>
     </div>

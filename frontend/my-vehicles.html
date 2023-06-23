@@ -52,19 +52,19 @@
   window.onload = function() {
     hidden()
 
-    renderSavedVehicles();
+    renderSavedSearches();
 }
 
-function renderSavedVehicles() {
-  const savedVehicles = JSON.parse(localStorage.getItem('savedVehicles')) || [];
-  const savedVehiclesList = document.getElementById('savedVehiclesList');
-  const savedVehicleCount = document.getElementById('savedVehicleCount');
+function renderSavedSearches() {
+  const savedSearches = JSON.parse(localStorage.getItem('savedSearches')) || [];
+  const savedSearchesList = document.getElementById('savedSearchesList');
+  const savedSearchesCount = document.getElementById('savedSearchesCount');
 
-  savedVehiclesList.innerHTML = ''; 
+  savedSearchesList.innerHTML = ''; 
 
-  savedVehicleCount.textContent = '(' + savedVehicles.length + ' Vozila)';
+  savedSearchesCount.textContent = `(${savedSearches.length} Vozila)`;
 
-  savedVehicles.forEach(savedVehicle => {
+  savedSearches.forEach(savedSearch => {
     const li = document.createElement('li');
 
     const divVehicleImg = document.createElement('div');
@@ -74,7 +74,7 @@ function renderSavedVehicles() {
     anchor.href = '#';
 
     const image = document.createElement('img');
-    image.src = 'assets/images/recent-car-1.jpg';
+    image.src = savedSearch.carImage;
     image.alt = 'image';
     anchor.appendChild(image);
 
@@ -86,10 +86,14 @@ function renderSavedVehicles() {
     const h6 = document.createElement('h6');
     const anchorInsideH6 = document.createElement('a');
     anchorInsideH6.href = '#';
-    anchorInsideH6.textContent = savedVehicle.carName;
+    anchorInsideH6.textContent = savedSearch.carName;
     h6.appendChild(anchorInsideH6);
 
+    const h8 = document.createElement('h8');
+    h8.textContent = savedSearch.carPrice;
+
     divVehicleTitle.appendChild(h6);
+    divVehicleTitle.appendChild(h8);
 
     const divVehicleStatus = document.createElement('div');
     divVehicleStatus.className = 'vehicle_status';
@@ -102,7 +106,7 @@ function renderSavedVehicles() {
     anchorTrash.href = '#';
     anchorTrash.addEventListener('click', function(event) {
       event.preventDefault();
-      removeSavedVehicle(savedVehicle); 
+      removeSavedSearch(savedSearch); 
       li.remove(); 
     });
 
@@ -116,15 +120,16 @@ function renderSavedVehicles() {
     li.appendChild(divVehicleTitle);
     li.appendChild(divVehicleStatus);
 
-    savedVehiclesList.appendChild(li);
+    savedSearchesList.appendChild(li);
   });
 
-  function removeSavedVehicle(savedVehicle) {
-  const savedVehicles = JSON.parse(localStorage.getItem('savedVehicles')) || [];
-  const updatedVehicles = savedVehicles.filter(vehicle => vehicle.carId !== savedVehicle.carId);
-  localStorage.setItem('savedVehicles', JSON.stringify(updatedVehicles));
+  function removeSavedSearch(savedSearch) {
+    const savedSearches = JSON.parse(localStorage.getItem('savedSearches')) || [];
+    const updatedSearches = savedSearches.filter(search => search.carId !== savedSearch.carId);
+    localStorage.setItem('savedSearches', JSON.stringify(updatedSearches));
+  }
 }
-}
+
 
 </script>
 </head>
@@ -168,9 +173,9 @@ function renderSavedVehicles() {
       </div>
       <div class="col-md-6 col-sm-8">
         <div class="profile_wrap">
-          <h5 class="uppercase underline">Oglasi koje pratim <span id="savedVehicleCount"></span></h5>
+          <h5 class="uppercase underline">Oglasi koje pratim <span id="savedSearchesCount"></span></h5>
           <div class="my_vehicles_list">
-            <ul class="vehicle_listing" id="savedVehiclesList">
+            <ul class="vehicle_listing" id="savedSearchesList">
             </ul>
           </div>
         </div>

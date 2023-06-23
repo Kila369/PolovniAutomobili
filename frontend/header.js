@@ -81,12 +81,13 @@
     if (response.ok) {
       // Login successful
 
-      const { token, data: { user: { name, role, _id } } } = data;
+      const { token, data: { user: { name, role, _id, savedSearches } } } = data;
       localStorage.setItem('email', email)
       localStorage.setItem('token', token);
       localStorage.setItem('name', name);
       localStorage.setItem('role', role);
       localStorage.setItem('id', _id);
+      localStorage.setItem('savedSearches', JSON.stringify(savedSearches));
       
       window.location.href = '/SI2/PolovniAutomobili/frontend/index.html';
     } else {
@@ -164,6 +165,7 @@
   localStorage.removeItem('token');
   localStorage.removeItem('role');
   localStorage.removeItem('id');
+  localStorage.removeItem('savedSearches');
   window.location.href = '/SI2/PolovniAutomobili/frontend/index.html';
   
   }

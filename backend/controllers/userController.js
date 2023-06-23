@@ -17,26 +17,40 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 
 const saveSearch = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  let searches = user.savedSearches;
-  if (searches) {
-    searches.push(req.body);
-  } else {
-    searches = [req.body];
+
+  if (!user) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'User not found',
+    });
   }
 
-  const updatedUser = await User.findByIdAndUpdate(
-    req.user.id,
-    { savedSearches: searches },
-    { new: true }
-  );
+  try {
+    const search = {
+      carName: req.body.carName,
+      carImage: req.body.carImage,
+      carPrice: req.body.carPrice,
+    };
 
-  res.status(200).json({
-    status: "success",
-    data: {
-      user: updatedUser,
-    },
-  });
+    user.savedSearches.push(search);
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      { $push: { savedSearches: search } },
+      { new: true }
+    );
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        user: updatedUser,
+        savedSearch: search,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 });
+
 
 const getUser = catchAsync(async (req, res, next) => {
   if (!(req.user.role === "admin") && !(req.user.id === req.params.id)) {

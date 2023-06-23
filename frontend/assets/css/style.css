@@ -217,7 +217,7 @@ blockquote {
     color: #fff
 }
 
-#accessories i,.about_info .icon_box,.angle_arrow i,.articale_header h2 a:hover,.article_meta ul li a:hover,.blog-content h5 a:hover,.blog-info-box li a:hover,.btn-link,.btn.outline,.car-title-m h6 a:hover,.categories_list ul li a:hover,.categories_list ul li a:hover:after,.checkbox input[type=checkbox]:checked+label:before,.compare_info table td i,.compare_info table th i,.contact-info a:hover,.contact_detail li a:hover,.control-label span,.dealer_contact_info a:hover,.dealers_listing .dealer_info h5 a:hover,.error_text_m h2,.featured-car-content>h6 a:hover,.footer-top ul li a:hover,.footer_widget ul li a:hover,.get-intouch a:hover,.header_search button:hover,.header_style2 .dropdown-menu>.active>a,.header_style2 .dropdown-menu>.active>a:focus,.header_style2 .dropdown-menu>.active>a:hover,.header_style2 .dropdown-menu>li>a:focus,.header_style2 .dropdown-menu>li>a:hover,.header_style2 .navbar-expand-lg .navbar-nav li:hover .dropdown-menu li a:hover,.header_style2 .navbar-nav>li>.dropdown-menu a:hover,.header_widgets a:hover,.inventory_info_list ul li i,.listing_detail_head .price_info p,.listing_other_info button:hover,.main_features ul li p,.my_vehicles_list ul.vehicle_listing li a:hover,.navbar-expand-lg .navbar-nav>.active>a:hover,.navbar-expand-lg .navbar-nav>.open>a,.navbar-expand-lg .navbar-nav>.open>a:focus,.navbar-expand-lg .navbar-nav>.open>a:hover,.navbar-expand-lg .navbar-nav>li.active a,.navbar-expand-lg .navbar-nav>li:focus a,.navbar-expand-lg .navbar-nav>li:hover a,.popular_post_title a:hover,.price,.pricing_info .price,.product-listing-content h5 a:hover,.radio input[type=radio]:checked+label:before,.search_btn,.services_info h4 a:hover,.share_article ul li,.social-follow a:hover,.team_more_info p a:hover,.text-primary,.widget_heading i,a {
+#accessories i,.about_info .icon_box,.angle_arrow i,.articale_header h2 a:hover,.article_meta ul li a:hover,.blog-content h5 a:hover,.blog-info-box li a:hover,.btn-link,.btn.outline,.car-title-m h6 a:hover,.categories_list ul li a:hover,.categories_list ul li a:hover:after,.checkbox input[type=checkbox]:checked+label:before,.compare_info table td i,.compare_info table th i,.contact-info a:hover,.contact_detail li a:hover,.control-label span,.dealer_contact_info a:hover,.dealers_listing .dealer_info h5 a:hover,.error_text_m h2,.featured-car-content>h6 a:hover,.footer-top ul li a:hover,.footer_widget ul li a:hover,.get-intouch a:hover,.header_search button:hover,.header_style2 .dropdown-menu>.active>a,.header_style2 .dropdown-menu>.active>a:focus,.header_style2 .dropdown-menu>.active>a:hover,.header_style2 .dropdown-menu>li>a:focus,.header_style2 .dropdown-menu>li>a:hover,.header_style2 .navbar-expand-lg .navbar-nav li:hover .dropdown-menu li a:hover,.header_style2 .navbar-nav>li>.dropdown-menu a:hover,.header_widgets a:hover,.inventory_info_list ul li i,.listing_detail_head .price_info p,.listing_other_info button:hover,.main_features ul li p,.my_vehicles_list ul.vehicle_listing li a:hover,.my_user_list ul.user_listing li a:hover,.navbar-expand-lg .navbar-nav>.active>a:hover,.navbar-expand-lg .navbar-nav>.open>a,.navbar-expand-lg .navbar-nav>.open>a:focus,.navbar-expand-lg .navbar-nav>.open>a:hover,.navbar-expand-lg .navbar-nav>li.active a,.navbar-expand-lg .navbar-nav>li:focus a,.navbar-expand-lg .navbar-nav>li:hover a,.popular_post_title a:hover,.price,.pricing_info .price,.product-listing-content h5 a:hover,.radio input[type=radio]:checked+label:before,.search_btn,.services_info h4 a:hover,.share_article ul li,.social-follow a:hover,.team_more_info p a:hover,.text-primary,.widget_heading i,a {
     color: #fa2837;
     fill: #fa2837
 }
@@ -3893,6 +3893,22 @@ table.info-tabel tr td {
     position: relative
 }
 
+
+.user_list ul.user_listing {
+    padding: 0;
+    margin: 0 0 50px
+}
+
+.my_user_list ul.user_listing li {
+    list-style: none;
+    border-bottom: #e6e6e6 solid 1px;
+    padding: 14px 0 22px;
+    overflow: hidden;
+    position: relative
+}
+
+
+
 .vehicle_img {
     float: left;
     margin-right: 22px;
@@ -3904,6 +3920,9 @@ table.info-tabel tr td {
 }
 
 .my_vehicles_list ul.vehicle_listing li a {
+    color: #111
+}
+.my_user_list ul.user_listing li a {
     color: #111
 }
 
@@ -3940,6 +3959,9 @@ table.info-tabel tr td {
 }
 
 .my_vehicles_list ul.vehicle_listing li .btn:hover {
+    color: #fff
+}
+.my_user_list ul.user_listing li .btn:hover {
     color: #fff
 }
 

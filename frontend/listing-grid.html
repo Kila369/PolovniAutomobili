@@ -50,37 +50,67 @@
   
 
     function handleClick() {
-      const offerElement = this.closest('.grid_listing');
-      const carNameElement = offerElement?.querySelector('.product-listing-content h5 a');
-      const carPriceElement = offerElement?.querySelector('.product-listing-content .list-price');
-      const carFeaturesElements = offerElement?.querySelectorAll('.product-listing-content .features_list li');
+  const offerElement = this.closest('.grid_listing');
+  const carNameElement = offerElement?.querySelector('.product-listing-content h5 a');
+  const carPriceElement = offerElement?.querySelector('.product-listing-content .list-price');
+  const carFeaturesElements = offerElement?.querySelectorAll('.product-listing-content .features_list li');
+  const carImageElement = offerElement?.querySelector('.product-listing-img img');
 
-  if (carNameElement && carPriceElement && carFeaturesElements) {
-    const carName = carNameElement?.textContent;
-    const carPrice = carPriceElement?.textContent;
-    const carFeatures = Array.from(carFeaturesElements || []).map(li => li.textContent);
+  if (carNameElement && carPriceElement && carFeaturesElements && carImageElement) {
+    const carName = carNameElement.textContent;
+    const carPrice = carPriceElement.textContent;
+    const carFeatures = Array.from(carFeaturesElements).map(li => li.textContent);
+    const carImageSrc = carImageElement.src;
+
+    const savedSearch = {
+        carName: carName,
+        carPrice: carPrice,
+        carImage: carImageSrc,
+
+  };
+
+    let savedSearches = localStorage.getItem('savedSearches');
+    if (!savedSearches) {
+      savedSearches = [];
+    } else {
+      savedSearches = JSON.parse(savedSearches);
+    }
     
-    const savedVehicle = {
-      carName,
-      carPrice,
-      carFeatures
-    };
-  
+    savedSearches.push(savedSearch);
+    localStorage.setItem('savedSearches', JSON.stringify(savedSearches));
+
+    console.log('Offer stored successfully:', savedSearch);
+    alert("Vozilo uspesno sacuvano");
+    const userid = localStorage.getItem("id");
+    const token = localStorage.getItem("token");
     
-    let savedVehicles = JSON.parse(localStorage.getItem('savedVehicles')) || [];
-  
-    
-    savedVehicles.push(savedVehicle);
-  
-    
-    localStorage.setItem('savedVehicles', JSON.stringify(savedVehicles));
-    
-    console.log('Offer stored successfully:', savedVehicle);
-    alert("Vozilo uspesno sacuvano")
-  } else {
+    fetch(`http://localhost:3000/api/v1/users/search`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(savedSearch),
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json(); // Parse the response JSON
+          } else {
+            throw new Error('Failed to update saved searches in the backend');
+          }
+        })
+        .then(data => {
+          console.log(data);
+          alert("Vozilo uspesno sacuvano");
+        })
+        .catch(error => {
+          console.error('Error occurred while updating saved searches:', error);
+        });
+    } else {
     console.error('Required elements not found.');
   }
 }
+
 
 
 
