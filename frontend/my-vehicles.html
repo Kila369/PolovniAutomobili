@@ -106,7 +106,8 @@ function renderSavedSearches() {
     anchorTrash.href = '#';
     anchorTrash.addEventListener('click', function(event) {
       event.preventDefault();
-      removeSavedSearch(savedSearch); 
+      const carName = savedSearch.carName;
+      removeSavedSearch(carName); 
       li.remove(); 
     });
 
@@ -123,9 +124,9 @@ function renderSavedSearches() {
     savedSearchesList.appendChild(li);
   });
 
-  function removeSavedSearch(savedSearch) {
+  function removeSavedSearch(carName) {
     const savedSearches = JSON.parse(localStorage.getItem('savedSearches')) || [];
-    const updatedSearches = savedSearches.filter(search => search.carId !== savedSearch.carId);
+    const updatedSearches = savedSearches.filter(search => search.carName !== carName);
     localStorage.setItem('savedSearches', JSON.stringify(updatedSearches));
   }
 }
