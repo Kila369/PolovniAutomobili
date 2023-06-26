@@ -1,7 +1,44 @@
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsyncError");
 const AppError = require("../utils/appError");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
+const multer = require("multer");
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/img");
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split("/")[1];
+    cb(
+      null,
+      `vehicle-${req.body.name}-${Date.now()}-${file.originalname}.${ext}`
+    );
+  },
+});
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Not a image, please upload only images!", 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+const setImageDestination = (files) => {
+  if (files) {
+    return files.map((file) => `${file.destination}/${file.filename}`);
+  } else {
+    return undefined;
+  }
+};
+
+const uploadUserPhoto = upload.single("photo");
 
 const getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find();
@@ -20,8 +57,8 @@ const saveSearch = catchAsync(async (req, res, next) => {
 
   if (!user) {
     return res.status(404).json({
-      status: 'fail',
-      message: 'User not found',
+      status: "fail",
+      message: "User not found",
     });
   }
 
@@ -40,7 +77,7 @@ const saveSearch = catchAsync(async (req, res, next) => {
     );
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: {
         user: updatedUser,
         savedSearch: search,
@@ -50,7 +87,6 @@ const saveSearch = catchAsync(async (req, res, next) => {
     next(error);
   }
 });
-
 
 const getUser = catchAsync(async (req, res, next) => {
   if (!(req.user.role === "admin") && !(req.user.id === req.params.id)) {

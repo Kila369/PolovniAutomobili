@@ -110,6 +110,13 @@ const vehicleSchema = new mongoose.Schema({
     default: "pending",
   },
   images: [],
+  roof: {
+    type: String,
+    enum: {
+      values: ["nista", "siber", "kabriolet", "panorama"],
+      message: "Please select valid vehicle status!",
+    },
+  },
 });
 
 const Vehicle = mongoose.model("Vehicle", vehicleSchema);

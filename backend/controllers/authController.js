@@ -5,7 +5,43 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsyncError");
 const AppError = require("../utils/appError");
+const multer = require("multer");
 
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/img");
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split("/")[1];
+    cb(
+      null,
+      `vehicle-${req.body.name}-${Date.now()}-${file.originalname}.${ext}`
+    );
+  },
+});
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Not a image, please upload only images!", 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+const setImageDestination = (file) => {
+  if (file) {
+    return `${file.destination}/${file.filename}`;
+  } else {
+    return undefined;
+  }
+};
+
+const uploadUserPhoto = upload.single("photo");
 
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -13,11 +49,13 @@ const signToken = (id) =>
   });
 
 const singup = catchAsync(async (req, res, next) => {
+  console.log(req.file);
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
+    photo: setImageDestination(req.file),
   });
 
   const token = signToken(newUser._id);
@@ -103,4 +141,5 @@ module.exports = {
   login,
   protect,
   restrictTo,
+  uploadUserPhoto,
 };
