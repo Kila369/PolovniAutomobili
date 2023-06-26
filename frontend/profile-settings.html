@@ -80,17 +80,19 @@
         if (newPassword === confirmPassword) {
           try {
           
-
+            const token = localStorage.getItem('token');
             const response = await fetch(`http://localhost:3000/api/v1/users/${userID}`, {
               method: 'PATCH',
               headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
               },
               body: JSON.stringify({ name: newName, email: newEmail, password: newPassword }),
             });
 
             if (response.ok) {
               console.log('Update successful');
+              alert("Licni podaci su uspesno promenjeni")
             } else {
               console.log('Update failed');
             }

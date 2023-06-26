@@ -69,25 +69,21 @@ const getUser = catchAsync(async (req, res, next) => {
 });
 
 const updateUser = catchAsync(async (req, res, next) => {
-  if (!(req.user.role === "admin") && !(req.user.id === req.params.id)) {
-    return next(
-      new AppError("You do not have permission to perform this action!", 403)
-    );
-  }
-  
+  const { name, email, savedSearches, password } = req.body;
+
   const hashedPassword = await bcrypt.hash(password, 12);
 
   const updatedUser = await User.findByIdAndUpdate(
     req.params.id,
     {
-      name: req.body.name,
-      email: req.body.email,
-      savedSearches: req.body.savedSearches,
-      password : hashedPassword }, 
+      name,
+      email,
+      savedSearches,
+      password: hashedPassword,
+    },
     {
       new: true,
     }
-
   );
 
   res.status(200).json({
