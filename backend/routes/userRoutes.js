@@ -5,7 +5,7 @@ const authContoller = require("../controllers/authController");
 
 const router = express.Router();
 
-router.post("/singup", authContoller.uploadUserPhoto, authContoller.singup);
+router.post("/singup", authContoller.singup);
 router.post("/login", authContoller.login);
 
 router.route("/").get(userController.getAllUsers);

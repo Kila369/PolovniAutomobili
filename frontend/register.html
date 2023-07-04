@@ -1,62 +1,7 @@
 <!-- Signup Form -->
 
-<script>
-  let loginForm = document.getElementById("signupform");
-  loginForm.addEventListener('submit', (e) => 
-  async function postUser() {
-    console.log('this is the call')
-    e.preventDefault();
-    const forma = document.getElementById('signupform');
-    console.log("a");
-
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email1').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('bodyType').value;
-    
-    const fileInput = document.getElementById('photo');
-
-
-
-    const formData = new FormData();
-
-        formData.append('name', name);
-        formData.append('email', make);
-        formData.append('password', model);
-        formData.append('passwordConfirm', bodyType);
-
-        for(let i = 0; i < fileInput.files.length;i++){
-          let file = fileInput.files[i];
-          formData.append('photo',file, file.name)
-        }
-        console.log(formData.get('photo'));
-
-    try {
-      const response = await fetch('http://localhost:3000/api/v1/users', {
-        method: 'POST',
-        headers: {
-          'Accept' : `multipart/form-data`,
-        },
-        body: formData
-      });
-
-      const data = await response.json();
-      console.log(data);
-      if (response.ok) {
-        //window.location.href = '/SI2/PolovniAutomobili/frontend/post-vehicle.html';
-      } else {
-        alert(data.message);
-      }
-    } catch (error) {
-      console.error('Error:', error.message);
-      alert('An error occurred. Please try again later.');
-    }
-  }
-  )
-</script>
-
 <div class="modal fade" id="signupform">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -68,7 +13,7 @@
         <div class="signup_wrap">
           <div class="row">
             <div class="col-md-15 col-sm-15">
-              <form id="signupForm" method="post" onsubmit=postUser>
+              <form id="signupForm" method="post">
                 <div class="form-group">
                   <input type="text" class="form-control" id="name" placeholder="Ime i prezime">
                 </div>
@@ -81,18 +26,12 @@
                 <div class="form-group">
                   <input type="password" class="form-control" id="confirmPassword" placeholder="Potvrdite sifru">
                 </div>
-                <div class="form-group">
-                  <label for="image-upload">Izaberi sliku:</label>
-                  <div id="image-preview"></div>
-                  <input type="file" id="photo" name="photos" accept="image/*">
-                </div>
                 <div class="form-group checkbox">
                   <input type="checkbox" id="terms_agree">
                   <label for="terms_agree">Slazem se <a href="#">sa uslovima za koriscenje</a></label>
                 </div>
-                
                 <div class="form-group">
-                  <button type= 'submit'="btn btn-block">Registruj me</button>
+                  <button type="submit" id="registerdugme" class="btn btn-block">Registruj me</button>
                 </div>
               </form>
             </div>

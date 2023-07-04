@@ -99,7 +99,6 @@
 
           productListingImage.querySelector('img').src = "../backend/" + data.data.vehicles[0]['images'][0];
           
-          
           productListingContent.querySelector('h5 a').textContent = data.data.vehicles[0]['name'];
           productListingContent.querySelector('.list-price').textContent = data.data.vehicles[0]['price'] + '$';
           productListingContent.querySelectorAll('.features_list li')[0].textContent = data.data.vehicles[0]['make'];
@@ -141,6 +140,7 @@
           <li><i class="fa fa-car" aria-hidden="true"></i>Fuel</li>
           <li><i class="fa fa-car" aria-hidden="true"></i>Fuel</li>
           <li><i class="fa fa-car" aria-hidden="true"></i>Fuel</li>
+          
         </ul>
       </div>
     </div>
